@@ -1,13 +1,17 @@
+import GameObjects.Car;
+import GameObjects.Pista;
+import Screens.GameScreen;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import logic.MyAnimationTimer;
 
 public class Start extends Application {
 
@@ -29,8 +33,10 @@ public class Start extends Application {
 
         final long startNanoTime = System.nanoTime();
 
-        new AnimationTimer()
-        {
+        final Pista pista = new Pista(new Car(0));
+
+        MyAnimationTimer anim = new MyAnimationTimer(pantalla, startNanoTime, pista);
+        /*{
             public void handle(long currentNanoTime)
             {
                 double t = (currentNanoTime - startNanoTime) / 10000000.0;
@@ -43,7 +49,21 @@ public class Start extends Application {
                 pantalla.drawBackground();
 
             }
-        }.start();
+        };*/
+        anim.start();
+        theScene.setOnKeyPressed(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        if(code == "UP"){
+                            anim.addDdy();
+                        }else if(code == "DOWN"){
+                            anim.subDdy();
+                        }
+                    }
+                });
 
         primaryStage.show();
     }

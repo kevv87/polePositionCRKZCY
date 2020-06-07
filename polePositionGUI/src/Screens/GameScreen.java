@@ -1,3 +1,5 @@
+package Screens;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -30,11 +32,11 @@ public class GameScreen {
         gc.setLineWidth(10);
         for(float i = size/2 + 10; i<size; i+=50){
             if(i+dy < size){
-                //gc.strokeLine(0,i+dy, size, i+dy);
+                gc.strokeLine(0,i+dy, size, i+dy);
                 gc.setStroke(Color.WHITE);
                 gc.strokeLine(size/2, i+dy, size/2, i+dy+5);
             }else{
-                //gc.strokeLine(0,i+dy-size/2, size, i+dy-size/2);
+                gc.strokeLine(0,i+dy-size/2, size, i+dy-size/2);
                 gc.setStroke(Color.WHITE);
                 gc.strokeLine(size/2, i+dy-size/2, size/2, i+dy-size/2+5);
             }

@@ -1,0 +1,53 @@
+package logic;
+
+import GameObjects.Pista;
+import Screens.GameScreen;
+import javafx.animation.AnimationTimer;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventException;
+import org.w3c.dom.events.EventListener;
+
+public class MyAnimationTimer extends AnimationTimer{
+
+    GameScreen pantalla;
+    Pista pista;
+    final double startNanoTime;
+    double lastIterationTime = 1;
+    double ddy;
+
+    public MyAnimationTimer(GameScreen pantalla, double startNanoTime, final Pista pista) {
+        this.pantalla = pantalla;
+        this.startNanoTime = startNanoTime;
+        this.pista = pista;
+    }
+
+    @Override
+    public void handle(long now) {
+        double t = (now - startNanoTime) / 10000000.0;
+        double dy = ((t*ddy)%300);
+
+        // background image clears canvas
+        pantalla.drawStreet();
+        pantalla.drawLines(dy);
+        pantalla.drawBackground();
+        pista.j1.avanzar();
+
+
+        System.out.println(pista.j1.getVelocidad());
+    }
+
+    public void addDdy(){
+        ddy+=0.05;
+        pista.j1.acelerar(0.5);
+    }
+
+    public void subDdy(){
+        if(ddy > 0){
+            ddy-=0.05;
+
+        }
+        pista.j1.acelerar(-0.5);
+
+
+    }
+}
