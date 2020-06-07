@@ -1,3 +1,4 @@
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,9 +25,25 @@ public class Start extends Application {
 
         GameScreen pantalla = new GameScreen(600, new Canvas(600,600));
 
-        pantalla.drawBackground();
-
         root.getChildren().add(pantalla.getCanvas());
+
+        final long startNanoTime = System.nanoTime();
+
+        new AnimationTimer()
+        {
+            public void handle(long currentNanoTime)
+            {
+                double t = (currentNanoTime - startNanoTime) / 10000000.0;
+                double ddy = 2.3;
+                double dy = ((t*ddy)%300);
+
+                // background image clears canvas
+                pantalla.drawStreet();
+                pantalla.drawLines(dy);
+                pantalla.drawBackground();
+
+            }
+        }.start();
 
         primaryStage.show();
     }
