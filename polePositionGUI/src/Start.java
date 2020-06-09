@@ -36,20 +36,7 @@ public class Start extends Application {
         final Pista pista = new Pista(new Car(0));
 
         MyAnimationTimer anim = new MyAnimationTimer(pantalla, startNanoTime, pista);
-        /*{
-            public void handle(long currentNanoTime)
-            {
-                double t = (currentNanoTime - startNanoTime) / 10000000.0;
-                double ddy = 2.3;
-                double dy = ((t*ddy)%300);
-
-                // background image clears canvas
-                pantalla.drawStreet();
-                pantalla.drawLines(dy);
-                pantalla.drawBackground();
-
-            }
-        };*/
+        
         anim.start();
         theScene.setOnKeyPressed(
                 new EventHandler<KeyEvent>()

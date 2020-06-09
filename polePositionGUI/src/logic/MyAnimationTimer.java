@@ -37,14 +37,15 @@ public class MyAnimationTimer extends AnimationTimer{
     }
 
     public void addDdy(){
-        ddy+=0.05;
+        if(ddy < 12){
+            ddy+=0.05;
+        }
         pista.j1.acelerar(0.5);
     }
 
     public void subDdy(){
         if(ddy > 0){
             ddy-=0.05;
-
         }
         pista.j1.acelerar(-0.5);
 
