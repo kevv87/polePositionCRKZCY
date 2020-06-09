@@ -1,0 +1,3 @@
+/home/cvaz/Documents/TEC/polePositionCRKZCY/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/cvaz/Documents/TEC/polePositionCRKZCY/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/cvaz/Documents/TEC/polePositionCRKZCY/cmake-build-debug/CMakeFiles/polePositionCRKZCY.dir
