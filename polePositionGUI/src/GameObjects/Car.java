@@ -1,5 +1,7 @@
 package GameObjects;
 
+import javafx.scene.image.Image;
+
 public class Car extends Drawable{
 
     private double velocidad;
@@ -9,10 +11,20 @@ public class Car extends Drawable{
         this.posM = pos;
         velocidad = 0;
         aceleracion = 0;
+        this.posX = 200;
+        imagen = new Image("./images/car1.png");
     }
 
     public void avanzar(){
         posM+=velocidad;
+    }
+
+    public void right(){
+        this.posX += 5;
+    }
+
+    public void left(){
+        this.posX -= 5;
     }
 
     public void acelerar(double dv){

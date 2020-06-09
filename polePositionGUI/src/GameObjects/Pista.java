@@ -1,6 +1,7 @@
 package GameObjects;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.util.List;
 
@@ -12,7 +13,14 @@ public class Pista {
 
     public List<Static> objetos;
 
+    public Camera camera;
+
     public void drawAll(GraphicsContext gc){
+        if(camera != null && camera.getAttached() != null){
+            camera.getAttached().resizeImage(200, 200);
+            gc.drawImage(camera.getAttached().imagen, camera.getAttached().getPosX(), 520);  // Dibujando el attached de la camara, siempre tiene y constante
+        }
+        //gc.drawImage(j1.imagen, 300, 300);
     }
 
     public Pista(Car j1) {

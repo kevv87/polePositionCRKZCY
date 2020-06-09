@@ -9,8 +9,8 @@ import org.w3c.dom.events.EventListener;
 
 public class MyAnimationTimer extends AnimationTimer{
 
-    GameScreen pantalla;
-    Pista pista;
+    public GameScreen pantalla;
+    public Pista pista;
     final double startNanoTime;
     double lastIterationTime = 1;
     double ddy;
@@ -30,8 +30,10 @@ public class MyAnimationTimer extends AnimationTimer{
         pantalla.drawStreet();
         pantalla.drawLines(dy);
         pantalla.drawBackground();
-        pista.j1.avanzar();
 
+        // Objects
+        pista.drawAll(pantalla.gc);
+        pista.j1.avanzar();
 
         System.out.println(pista.j1.getVelocidad());
     }
