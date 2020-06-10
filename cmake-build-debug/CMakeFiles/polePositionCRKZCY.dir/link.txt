@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/polePositionCRKZCY.dir/server.c.o CMakeFiles/polePositionCRKZCY.dir/client.c.o  -o polePositionCRKZCY 
