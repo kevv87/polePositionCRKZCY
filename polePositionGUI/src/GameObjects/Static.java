@@ -20,9 +20,10 @@ public class Static extends Drawable{
     // Metodo que dibuja al objeto estatico en funcion de la distancia en kilometros de la camara
     public void draw(GraphicsContext gc, double distanciaCamara){
         double size = 600;
-        double y = -size*distanciaCamara/2 + size;
-        double x = ((-18*size*y)/(10*size + 20)) + size+posX;
-        System.out.println(y);
-        gc.drawImage(imagen, x, y);
+        double x = (-posX/5) + (size/2) - (size/10);
+        double x2 = ((-8*posX*x)/(5*(size+2))) + posX;
+        double y = -size*distanciaCamara/2 +size;
+        System.out.println(x2);
+        gc.drawImage(imagen, x2, y);
     }
 }
