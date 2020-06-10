@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 // dibujar en pantalla
 public abstract class Drawable {
     protected double posM; // Position in meters from the start
-    protected double posX; // Position in meters in the street.
+    protected double posX; // Posicion en x en la calle.
     public Image imagen; // Imagen a dibujar
 
     public double distanceFromCamera(Camera camera){

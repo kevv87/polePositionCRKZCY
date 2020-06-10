@@ -12,7 +12,7 @@ public class MyAnimationTimer extends AnimationTimer{
     public GameScreen pantalla;
     public Pista pista;
     final double startNanoTime;
-    double lastIterationTime = 1;
+    private double secondCounter = -1;
     double ddy;
 
     public MyAnimationTimer(GameScreen pantalla, double startNanoTime, final Pista pista) {
@@ -33,9 +33,14 @@ public class MyAnimationTimer extends AnimationTimer{
 
         // Objects
         pista.drawAll(pantalla.gc);
-        pista.j1.avanzar();
-
-        System.out.println(pista.j1.getVelocidad());
+        if(secondCounter == -1){
+            secondCounter = now;
+        }else if (now-secondCounter > 1){
+            pista.j1.avanzar();
+            secondCounter = now;
+        }
+        //System.out.println(pista.j1.getPosM());
+        //System.out.println(pista.j1.getVelocidad());
     }
 
     public void addDdy(){

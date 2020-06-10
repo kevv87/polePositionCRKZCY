@@ -1,6 +1,7 @@
 import GameObjects.Camera;
 import GameObjects.Car;
 import GameObjects.Pista;
+import GameObjects.Static;
 import Screens.GameScreen;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
@@ -41,6 +42,7 @@ public class Start extends Application {
 
         pista.camera = new Camera();
         pista.camera.attachTo(pista.j1);
+        pista.addObjeto(new Static("vida", 1, 300));
 
         MyAnimationTimer anim = new MyAnimationTimer(pantalla, startNanoTime, pista);
 

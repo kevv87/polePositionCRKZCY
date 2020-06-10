@@ -15,8 +15,10 @@ public class Car extends Drawable{
         imagen = new Image("./images/car1.png");
     }
 
+    // Funcion que hace que avance el carro, segun la cantidad de nani
+    //  segundos que lleva en la misma velocidad
     public void avanzar(){
-        posM+=velocidad;
+        posM+=velocidad/3600;
     }
 
     public void right(){

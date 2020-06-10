@@ -22,4 +22,10 @@ public class Camera {
     public double getPosM() {
         return posM;
     }
+
+    // Funcion que actualiza la posicion en funcion al objeto al que esta agarrada la camara.
+    public void updatePos(){
+        posM = attached.posM;
+        posX = attached.posX;
+    }
 }
