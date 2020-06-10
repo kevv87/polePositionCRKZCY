@@ -24,6 +24,7 @@ public class Pista {
             for (Static objeto: objetos) {
                 objeto.draw(gc, objeto.posM - camera.getPosM());
             }
+            //System.out.println(camera.getPosM());
         }
 
         //gc.drawImage(j1.imagen, 300, 300);

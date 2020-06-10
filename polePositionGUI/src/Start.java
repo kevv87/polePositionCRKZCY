@@ -42,7 +42,7 @@ public class Start extends Application {
 
         pista.camera = new Camera();
         pista.camera.attachTo(pista.j1);
-        pista.addObjeto(new Static("vida", 1, 300));
+        pista.addObjeto(new Static("vida", 1, 240));
 
         MyAnimationTimer anim = new MyAnimationTimer(pantalla, startNanoTime, pista);
 
