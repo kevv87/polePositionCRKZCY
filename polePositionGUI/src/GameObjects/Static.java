@@ -24,6 +24,14 @@ public class Static extends Drawable{
         double y = size-distanciapx;
         double x2 = (2*size -4*posX)*2*distanciapx/(5*size) + posX;
         //System.out.println(x2);
-        gc.drawImage(imagen, x2, y);
+        if(distanciapx >= (size/2)*0.9){
+            modifySize(15);
+        }else if(distanciapx >= (size/2)*0.70){
+            modifySize(30);
+        }else{
+            modifySize(50);
+        }
+        System.out.println(distanciapx/(size/2));
+        gc.drawImage(imagen, x2-imagen.getWidth()/2, y);
     }
 }

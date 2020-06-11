@@ -8,6 +8,7 @@ public abstract class Drawable {
     protected double posM; // Position in meters from the start
     protected double posX; // Posicion en x en la calle.
     public Image imagen; // Imagen a dibujar
+    protected double imagenSize;
 
     public double distanceFromCamera(Camera camera){
         return posM - camera.getPosM();
@@ -22,6 +23,14 @@ public abstract class Drawable {
     }
 
     public double getPosX() {
-        return posX;
+        return (posX+imagen.getWidth())/2;
+    }
+
+    // Modifica el tamaño de la imagen del drawable
+    public void modifySize(double newSize){
+        if(newSize!= imagenSize){
+            imagenSize = newSize;
+            imagen = new Image(imagen.getUrl(), imagenSize, imagenSize, true, true);
+        }
     }
 }
