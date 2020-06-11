@@ -25,7 +25,7 @@ int main(int argc , char *argv[]){
     fd_set readfds;
 
     //a message
-    char *message = "ECHO Daemon v1.0 \r\n";
+    char *message = "Welcome \r\n";
 
     //initialise all client_socket[] to 0 so not checked
     for (i = 0; i < max_clients; i++){
@@ -155,8 +155,11 @@ int main(int argc , char *argv[]){
                     bzero(buffer, 255);
                     valread = write(sd, buffer, strlen(buffer));
                     buffer[valread] = '\0';
-                    char hello = 'Hello bitch';
-                    send(sd , hello, strlen(buffer) , 0 );
+                    //Server input
+                    bzero(buffer, 255);
+                    //fgets(buffer, 255, stdin);
+                    write(sd, message, strlen(message));
+                    send(sd, message, strlen(message), 0);
                 }
             }
         }
