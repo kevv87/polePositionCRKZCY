@@ -1,6 +1,16 @@
 // A Java program for a Client 
 import java.net.*; 
-import java.io.*; 
+import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 
 public class Client 
 { 
@@ -21,8 +31,8 @@ public class Client
             // takes input from terminal 
             input = new DataInputStream(System.in); 
 
-            // sends output to the socket 
-            out = new DataOutputStream(socket.getOutputStream()); 
+            // sends output to the socket
+          	out = new DataOutputStream(socket.getOutputStream());
         } 
         catch(UnknownHostException u) 
         { 
@@ -41,7 +51,10 @@ public class Client
         { 
             try
             { 
-                line = input.readLine(); 
+                line = input.readLine();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+      			bufferedWriter.write(line);
+      			bufferedWriter.flush();
                 out.writeUTF(line); 
             } 
             catch(IOException i) 
@@ -51,20 +64,17 @@ public class Client
         } 
 
         // close the connection 
-        try
-        { 
+        try{ 
             input.close(); 
             out.close(); 
             socket.close(); 
         } 
-        catch(IOException i) 
-        { 
+        catch(IOException i){ 
             System.out.println(i); 
         } 
     } 
 
-    public static void main(String args[]) 
-    { 
-        Client client = new Client("127.0.0.1", 8080); 
+    public static void main(String args[]) { 
+        Client client = new Client("127.0.0.1", 8888); 
     } 
 } 
