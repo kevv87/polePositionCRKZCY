@@ -13,23 +13,40 @@ public class Static extends Drawable{
         this.type = type;
         this.posM = posM;
         this.posX = posX;
+        this.type = type;
         v = 0;
         if(type == "vida"){
             imagen = new Image("./images/vida.png", 50, 50, true, true);
+        }else if(type == "hueco"){
+            imagen = new Image("./images/obs.png", 100, 100, true, true);
+        }else if(type=="boost"){
+            imagen = new Image("./images/boost.png", 50, 50, true, true);
         }
+    }
+
+    public void modifySize(double newSize){
+        if(type=="vida"){
+            newSize *=1;
+        }else if(type == "hueco"){
+            newSize *=3;
+        }else if(type=="boost"){
+            newSize*=4;
+        }
+        super.modifySize(newSize);
     }
 
     // Metodo que dibuja al objeto estatico en funcion de la distancia en kilometros de la camara
     public void draw(GraphicsContext gc, double distanciaCamara){
         double size = 600;
-        double distanciapx = size*distanciaCamara/2;
+        double wanted = 1;
+        double distanciapx = size*distanciaCamara/(2*wanted);
         double x2 = (2*size -4*posX)*2*distanciapx/(5*size) + posX;
         //System.out.println(x2);
         double y = (size-distanciapx-v);
-        if((size/2)/y >= 0.9){
+        if((size/2)/y >= 0.97){
             modifySize(15);
             v-=0;
-        }else if((size/2)/y >= 0.7){
+        }else if((size/2)/y >= 0.8){
             modifySize(30);
             v-=1;
         }else{

@@ -22,11 +22,11 @@ public class Car extends Drawable{
     }
 
     public void right(){
-        this.posX += 5;
+        this.posX += 20;
     }
 
     public void left(){
-        this.posX -= 5;
+        this.posX -= 20;
     }
 
     public void acelerar(double dv){
