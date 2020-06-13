@@ -253,4 +253,5 @@ hs_err_pid*
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
+
 # End of https://www.toptal.com/developers/gitignore/api/clion,linux,c,intellij,java
