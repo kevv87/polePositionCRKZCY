@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="30ad27ab-0587-4f3d-a6ba-39cf24dbf901" name="Default Changelist" comment="Inicio de velocidades">
+      <change afterPath="$PROJECT_DIR$/src/logic/Client.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1cxEinJazKJy1QVrqcAOW23iIx9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="openjdk-14" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../SDKs/javafx-sdk-11.0.2/lib/javafx.web.jar!/" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Start" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/openjdk-14.0.1" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Start" />
+      <module name="polePositionGUI" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\Kevin\Documents\SDKs\javafx-sdk-11.0.2\lib --add-modules=javafx.controls" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30ad27ab-0587-4f3d-a6ba-39cf24dbf901" name="Default Changelist" comment="" />
+      <created>1591461973251</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1591461973251</updated>
+      <workItem from="1591461980961" duration="29911000" />
+      <workItem from="1591669789984" duration="1871000" />
+      <workItem from="1591672052041" duration="10824000" />
+      <workItem from="1591838109414" duration="14437000" />
+      <workItem from="1592010245120" duration="3078000" />
+    </task>
+    <task id="LOCAL-00001" summary="Fondo">
+      <created>1591468996617</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1591468996617</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ilusion de movimiento en carretera">
+      <created>1591499863298</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1591499863298</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Inicio de velocidades">
+      <created>1591505941469</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1591505941469</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Velocidad sincronizada">
+      <created>1591672414204</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1591672414204</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Posibilidad de attach la camara a un objeto y movimiento lateral del carro.">
+      <created>1591675541103</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1591675541103</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Funcionamiento a escala de la velocidad">
+      <created>1591755060622</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1591755060622</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Inicio de acercamiento de objetos con el movimiento del carro">
+      <created>1591756057287</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1591756057287</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Un poco mas de avance">
+      <created>1591757630875</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1591757630875</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Dibujado de objetos dependiendo de la posicion relativa a la camara">
+      <created>1591842257182</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1591842257182</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Cambio de tamaño de objetos según posicion">
+      <created>1591844601182</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1591844601182</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Cambio de velocidad segun posicion">
+      <created>1591846889212</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1591846889212</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added other images">
+      <created>1591929383717</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1591929383717</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fondo" />
+    <MESSAGE value="Ilusion de movimiento en carretera" />
+    <MESSAGE value="Inicio de velocidades" />
+    <MESSAGE value="Velocidad sincronizada" />
+    <MESSAGE value="Posibilidad de attach la camara a un objeto y movimiento lateral del carro." />
+    <MESSAGE value="Funcionamiento a escala de la velocidad" />
+    <MESSAGE value="Inicio de acercamiento de objetos con el movimiento del carro" />
+    <MESSAGE value="Un poco mas de avance" />
+    <MESSAGE value="Dibujado de objetos dependiendo de la posicion relativa a la camara" />
+    <MESSAGE value="Cambio de tamaño de objetos según posicion" />
+    <MESSAGE value="Cambio de velocidad segun posicion" />
+    <MESSAGE value="Added other images" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added other images" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="392" y="71" key="#Plugins" timestamp="1591672020418">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="392" y="71" key="#Plugins/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591672020418" />
+    <state x="509" y="49" key="#Start" timestamp="1592017994999">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="509" y="49" key="#Start/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592017994999" />
+    <state x="0" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592018917061">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="0" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1024.728@0.0.1024.728" timestamp="1591464260300" />
+    <state x="0" y="22" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018917061" />
+    <state x="495" y="95" key="#com.intellij.ide.util.MemberChooser" timestamp="1591751878793">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="317" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1024.728@0.0.1024.728" timestamp="1591504478894" />
+    <state x="495" y="95" key="#com.intellij.ide.util.MemberChooser/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591751878793" />
+    <state x="377" y="182" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1592018616984">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="241" y="154" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1024.728@0.0.1024.728" timestamp="1591464172419" />
+    <state x="377" y="182" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018616984" />
+    <state x="558" y="300" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1592017328447">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="558" y="300" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592017328447" />
+    <state x="309" y="234" key="DetectedRootsChooserDialog" timestamp="1591464039301">
+      <screen x="0" y="0" width="1024" height="728" />
+    </state>
+    <state x="309" y="234" key="DetectedRootsChooserDialog/0.0.1024.728@0.0.1024.728" timestamp="1591464039301" />
+    <state x="456" y="141" key="FileChooserDialogImpl" timestamp="1592018864799">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="292" y="119" key="FileChooserDialogImpl/0.0.1024.728@0.0.1024.728" timestamp="1591464037133" />
+    <state x="456" y="141" key="FileChooserDialogImpl/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018864799" />
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1592018878841">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="981" height="179" key="GridCell.Tab.0.bottom/0.0.1024.728@0.0.1024.728" timestamp="1591505922821" />
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018878841" />
+    <state width="1397" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860/-1440.-346.1440.860@-1440.-346.1440.860" timestamp="1591846630770" />
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591929043919" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1592018878840">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="981" height="179" key="GridCell.Tab.0.center/0.0.1024.728@0.0.1024.728" timestamp="1591505922820" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018878840" />
+    <state width="1397" height="222" key="GridCell.Tab.0.center/0.0.1600.860/-1440.-346.1440.860@-1440.-346.1440.860" timestamp="1591846630770" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591929043919" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1592018878840">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="981" height="179" key="GridCell.Tab.0.left/0.0.1024.728@0.0.1024.728" timestamp="1591505922820" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018878840" />
+    <state width="1397" height="222" key="GridCell.Tab.0.left/0.0.1600.860/-1440.-346.1440.860@-1440.-346.1440.860" timestamp="1591846630769" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591929043919" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1592018878841">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="981" height="179" key="GridCell.Tab.0.right/0.0.1024.728@0.0.1024.728" timestamp="1591505922820" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018878841" />
+    <state width="1397" height="222" key="GridCell.Tab.0.right/0.0.1600.860/-1440.-346.1440.860@-1440.-346.1440.860" timestamp="1591846630770" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591929043919" />
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom" timestamp="1591674396026">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591674396026" />
+    <state width="1557" height="276" key="GridCell.Tab.1.center" timestamp="1591674396025">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.center/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591674396025" />
+    <state width="1557" height="276" key="GridCell.Tab.1.left" timestamp="1591674396025">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.left/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591674396025" />
+    <state width="1557" height="276" key="GridCell.Tab.1.right" timestamp="1591674396026">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591674396026" />
+    <state x="0" y="0" key="SettingsEditor" timestamp="1592018873624">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="0" y="0" key="SettingsEditor/0.0.1024.728@0.0.1024.728" timestamp="1591464043298" />
+    <state x="0" y="0" key="SettingsEditor/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018873624" />
+    <state x="392" y="163" key="Vcs.Push.Dialog.v2" timestamp="1591929392909">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="-1087" y="-183" key="Vcs.Push.Dialog.v2/0.0.1600.860/-1440.-346.1440.860@-1440.-346.1440.860" timestamp="1591846890781" />
+    <state x="392" y="163" key="Vcs.Push.Dialog.v2/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591929392909" />
+    <state x="409" y="119" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1592018296043">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="409" y="119" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018296043" />
+    <state x="0" y="46" key="new project wizard" timestamp="1592018072727">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="0" y="46" key="new project wizard/0.0.1600.860/-1024.0.1024.728@0.0.1600.860" timestamp="1592018072727" />
+    <state x="168" y="162" key="run.anything.popup" timestamp="1591466025645">
+      <screen x="0" y="0" width="1024" height="728" />
+    </state>
+    <state x="168" y="162" key="run.anything.popup/0.0.1024.728@0.0.1024.728" timestamp="1591466025645" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1591672003276">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860/-1440.-346.1440.860@0.0.1600.860" timestamp="1591672003276" />
+  </component>
+</project>
