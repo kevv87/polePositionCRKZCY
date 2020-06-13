@@ -15,10 +15,13 @@ public class Client
     private Socket socket        = null;
     private DataInputStream input = null;
     private DataOutputStream out     = null;
+    private BufferedWriter bufferedWriter = null;
+    private boolean counter;
 
     // constructor to put ip address and port
     public Client(String address, int port) {
         // establish a connection
+        counter = false;
         try {
             socket = new Socket(address, port);
             System.out.println("Connected");
@@ -28,22 +31,19 @@ public class Client
 
             // sends output to the socket
             out = new DataOutputStream(socket.getOutputStream());
+
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException u) {
             System.out.println(u);
         }
     }
-    public void read() {
+    public String read() {
         // string to read message from input
         String input_line = "";
         String answer_line = "";
 
         // keep reading until "Over" is input
-        while (!input_line.equals("Over")) {
             try {
-                input_line = input.readLine();
-                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                bufferedWriter.write(input_line);
-                bufferedWriter.flush();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 bufferedReader.read();
                 answer_line = bufferedReader.readLine();
@@ -51,7 +51,25 @@ public class Client
             } catch (IOException i) {
                 System.out.println(i);
             }
+            return answer_line;
+
+    }
+
+    public void writeI(String msg) throws IOException {
+        if(counter){
+            return;
         }
+        counter = !counter;
+        bufferedWriter.write("I"+msg);
+        bufferedWriter.flush();
+    }
+    public void writeR(String msg) throws IOException {
+        if(!counter){
+            return;
+        }
+        counter = !counter;
+        bufferedWriter.write("R"+msg);
+        bufferedWriter.flush();
     }
 
     public void close(){
@@ -67,6 +85,13 @@ public class Client
     }
 
     public static void main(String args[]) {
-        Client client = new Client("127.0.0.1", 8888);
+        Client client = new Client("25.28.229.147", 8888);
+        try {
+            client.writeI("Ola");
+            client.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        client.close();
     }
 }
