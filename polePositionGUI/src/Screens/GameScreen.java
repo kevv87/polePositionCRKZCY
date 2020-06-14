@@ -4,17 +4,59 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class GameScreen {
 
     public GraphicsContext gc;
     private final float size;
     private final Canvas canvas;
+    private ArrayList<Segment> segments = new ArrayList<Segment>();
+    private double rumbleLength = 3;
+    private double segmentLength = 200;
+    private int drawDistance =  300;
 
     public GameScreen(float size, Canvas canvas) {
         this.size = size;
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
         drawAll();
+    }
+
+    public Segment findSegment(int z){
+        return segments.get((int) (Math.floor(z/segmentLength) % segments.size()));
+    }
+
+    // Toma la posicion de la camara
+    public void render(GraphicsContext gc, int position){
+        // Clear screen
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0,0,size, size);
+
+        // Draw background
+        Segment baseSegment = findSegment(position);
+        double maxy = size;
+        int n;
+        Segment segment;
+        for(n = 0;n<drawDistance;n++){
+            segment = segments.get(((segments.indexOf(baseSegment)) + n )%segments.size());
+            
+        }
+    }
+
+
+
+
+    public void resetRoad(){
+        Color color  = Color.GRAY;
+        for(int n = 0; n< 500;n++){
+            if(Math.floor(n/rumbleLength)%2==0){
+                color = Color.BLACK;
+            }else{
+                color = Color.GRAY;
+            }
+            segments.add(new Segment(n, segmentLength,color));
+        }
     }
 
     public void drawLines(){

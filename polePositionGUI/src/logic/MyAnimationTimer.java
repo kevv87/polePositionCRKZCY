@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventException;
 import org.w3c.dom.events.EventListener;
+import pseudo3dRacing.RoadAppMain;
 
 public class MyAnimationTimer extends AnimationTimer{
 
@@ -13,6 +14,7 @@ public class MyAnimationTimer extends AnimationTimer{
     public Pista pista;
     final double startNanoTime;
     private double secondCounter = -1;
+    //private RoadAppMain.DrawPanel drawPanel;
     double ddy;
 
     public MyAnimationTimer(GameScreen pantalla, double startNanoTime, final Pista pista) {
@@ -23,24 +25,8 @@ public class MyAnimationTimer extends AnimationTimer{
 
     @Override
     public void handle(long now) {
-        double t = (now - startNanoTime) / 10000000.0;
-        double dy = ((t*ddy)%300);
-
-        // background image clears canvas
-        pantalla.drawStreet();
-        pantalla.drawLines(dy);
-        pantalla.drawBackground();
-
-        // Objects
-        pista.drawAll(pantalla.gc);
-        if(secondCounter == -1){
-            secondCounter = now;
-        }else if (now-secondCounter > 1){
-            pista.j1.avanzar();
-            secondCounter = now;
-        }
-        //System.out.println(pista.j1.getPosM());
-        //System.out.println(pista.j1.getVelocidad());
+        //drawPanel.repaint();
+        System.out.println('a');
     }
 
     public void addDdy(){
