@@ -17,8 +17,13 @@ public class RoadAppMain extends JFrame {
 
     int width=1600;
     int height = 768;
-    int pos=0;
-    int playerX=0;
+    double pos=0;
+    double playerX=0;
+
+    boolean up;
+    boolean down;
+    boolean left;
+    boolean right;
 
 
     int N;
@@ -49,6 +54,28 @@ public class RoadAppMain extends JFrame {
         setVisible(true);
         pack();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    if(up){
+                        pos+=0.001;
+                    }
+                    if(down){
+                        pos-=0.001;
+                    }
+                    if(left){
+                        playerX+=0.0005;
+                    }
+                    if(right){
+                        playerX-=0.0005;
+                    }
+                    drawPanel.repaint();
+                }
+
+            }
+        }).start();
+
 
 
         //add(drawPanel);
@@ -57,29 +84,44 @@ public class RoadAppMain extends JFrame {
     class Keychecker extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent event){
-            char ch = event.getKeyChar();
-            System.out.println(event.getKeyCode());
-            boolean draw = false;
             if(event.getKeyCode() == KeyEvent.VK_UP){
-                pos+=200;
-                draw=true;
-                //drawPanel.repaint();
-            }if(event.getKeyCode() == KeyEvent.VK_DOWN){
-                pos-=200;
-                draw=true;
-                //drawPanel.repaint();
-            } if(event.getKeyCode() == KeyEvent.VK_RIGHT){
-                playerX +=200;
-                draw=true;
-                //drawPanel.repaint();
-            } if (event.getKeyCode() == KeyEvent.VK_LEFT){
-                playerX-=200;
-                draw=true;
+                up = true;
                 //drawPanel.repaint();
             }
-
-            if(draw){
+            if(event.getKeyCode() == KeyEvent.VK_DOWN){
+                down = true;
+                //drawPanel.repaint();
+            }
+            if(event.getKeyCode() == KeyEvent.VK_RIGHT){
+                right = true;
+                //drawPanel.repaint();
+            }
+            if (event.getKeyCode() == KeyEvent.VK_LEFT){
+                left = true;
+                //drawPanel.repaint();
+            }
+            /*if(draw){
                 drawPanel.repaint();
+            }*/
+        }
+
+        @Override
+        public void keyReleased(KeyEvent event) {
+            if(event.getKeyCode() == KeyEvent.VK_UP){
+                up = false;
+                //drawPanel.repaint();
+            }
+            if(event.getKeyCode() == KeyEvent.VK_DOWN){
+                down = false;
+                //drawPanel.repaint();
+            }
+            if(event.getKeyCode() == KeyEvent.VK_RIGHT){
+                right = false;
+                //drawPanel.repaint();
+            }
+            if (event.getKeyCode() == KeyEvent.VK_LEFT){
+                left = false;
+                //drawPanel.repaint();
             }
         }
     }
@@ -116,18 +158,23 @@ public class RoadAppMain extends JFrame {
 
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-
+            System.out.println("Pos: " + pos + " posx " + playerX);
             drawValues(g);
         }
 
         private void drawValues(Graphics g){
             //drawQuad(g,Color.green, 500, 500, 200, 500,300,100);
             // ######################## draw road ############################## //
-            int startPos = pos/segL;
+            int startPos = (int) (pos/segL);
             double x=0, dx= 0;
 
             for(int n=startPos; n<startPos+300;n++){
                 Line l = lines.get(n%N);
+                //System.out.println("Pos: " + pos + " posx: " +playerX );
+                //System.out.println(l.z);
+                if(l.curve > 0 && l.z == pos){
+                    playerX -= 0.001;
+                }
                 l.project(playerX-(int)x, 1500, pos);
 
 
@@ -152,7 +199,7 @@ public class RoadAppMain extends JFrame {
             }
             Graphics skyG=g;
             skyG.setColor(Color.blue);
-            skyG.fillRect(0,0,D_W, 387);
+            skyG.fillRect(0,0,D_W, 395);
         }
 
         void drawQuad(Graphics g, Color c, int x1, int y1, int w1, int x2, int y2, int w2){
@@ -179,7 +226,7 @@ public class RoadAppMain extends JFrame {
         }
 
         // World to screen
-        void project(int camX, int camY, int camZ){
+        void project(double camX, int camY, double camZ){
             scale = camD/(z-camZ);
             X=(1+scale*(x-camX))*width/2;
             Y=(1-scale*(y-camY))*height/2;
@@ -194,5 +241,6 @@ public class RoadAppMain extends JFrame {
                 new RoadAppMain();
             }
         });
+
     }
 }
