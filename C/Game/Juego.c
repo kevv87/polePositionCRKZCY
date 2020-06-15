@@ -6,8 +6,11 @@
 #include <stdio.h>
 #include <time.h>
 #include "Juego.h"
+
 void setJugador(Jugador_t jugador){
-    jugador.avanzando = 1;
+    jugador.client = 0;
+    jugador.movimiento_avance = '_';
+    jugador.movimiento_lateral = '_';
     jugador.colision = 0;
     jugador.color = 0;
     jugador.puntaje = 0;
@@ -23,7 +26,7 @@ void asignarColor(Jugador_t jugador, int color){
 }
 
 void avanzar(Jugador_t jugador, float tiempo){
-    if(jugador.avanzando == 1){
+    if(jugador.movimiento_avance == 'w'){
         jugador.t_acumulado += tiempo;
         if(abs(jugador.pos_X) <= 5){
             avanzar_carretera(jugador, tiempo);
@@ -32,16 +35,19 @@ void avanzar(Jugador_t jugador, float tiempo){
             avanzar_cesped(jugador, tiempo);
         }
     }
+    else{
+        frenar(jugador);
+    }
 }
 
 void avanzar_carretera(Jugador_t jugador, float tiempo){
     jugador.pos_Y += tiempo*jugador.rapidez;
-    jugador.rapidez = 210*(-exp((-jugador.t_acumulado)*0.009) + 1);
+    jugador.rapidez = 210*(-exp((jugador.t_acumulado)*k) + 1);
 }
 
 void avanzar_cesped(Jugador_t jugador, float tiempo){
     jugador.pos_Y += tiempo*jugador.rapidez;
-    jugador.rapidez = 80*(-exp((-jugador.t_acumulado)*0.009) + 1);
+    jugador.rapidez = 80*(-exp((-jugador.t_acumulado)*k) + 1);
 }
 
 void moverBalas(){
@@ -51,11 +57,18 @@ void moverBalas(){
 int colision(Jugador_t jugador){
     if(jugador.colision == 1){
         jugador.t_acumulado = 0;
+        jugador.rapidez = 0;
     }
 }
 
 void frenar(Jugador_t jugador){
-    if(jugador.avanzando == 0){
+    if(jugador.movimiento_avance == '_'){
+        if(abs(jugador.pos_X) <= 5){        //Si el jugador esta en la carretera
+            jugador.t_acumulado = (log(1-(jugador.rapidez/210)))/k;
+        }
+        else{       //Si el jugador esta en el cesped
+            jugador.t_acumulado = (log(1-(jugador.rapidez/80)))/k;
+        }
         jugador.t_acumulado -= 5;
     }
 }
@@ -89,12 +102,6 @@ void juego(){
             t_referencia = t_actual;
             colision(jugador1);
             colision(jugador2);
-            frenar(jugador1);
-            frenar(jugador2);
         }
     }
-}
-
-void carrera(){
-
 }
