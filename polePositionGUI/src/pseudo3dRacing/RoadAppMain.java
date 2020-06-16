@@ -1,11 +1,15 @@
 package pseudo3dRacing;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoadAppMain extends JFrame {
@@ -60,6 +64,9 @@ public class RoadAppMain extends JFrame {
                 while(true){
                     if(up){
                         pos+=0.001;
+                        if(pos>200*segL && pos<700*segL){
+                            playerX -=0.0001;
+                        }
                     }
                     if(down){
                         pos-=0.001;
@@ -159,21 +166,29 @@ public class RoadAppMain extends JFrame {
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             System.out.println("Pos: " + pos + " posx " + playerX);
-            drawValues(g);
+            try {
+                drawValues(g);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        private void drawValues(Graphics g){
+        private void drawValues(Graphics g) throws IOException {
             //drawQuad(g,Color.green, 500, 500, 200, 500,300,100);
             // ######################## draw road ############################## //
             int startPos = (int) (pos/segL);
             double x=0, dx= 0;
 
+
+
             for(int n=startPos; n<startPos+300;n++){
                 Line l = lines.get(n%N);
                 //System.out.println("Pos: " + pos + " posx: " +playerX );
                 //System.out.println(l.z);
-                if(l.curve > 0 && l.z == pos){
-                    playerX -= 0.001;
+                if(playerX>roadW+100){
+                    playerX = roadW+100;
+                }else if(playerX<-roadW-100){
+                    playerX = -roadW-100;
                 }
                 l.project(playerX-(int)x, 1500, pos);
 
@@ -200,6 +215,8 @@ public class RoadAppMain extends JFrame {
             Graphics skyG=g;
             skyG.setColor(Color.blue);
             skyG.fillRect(0,0,D_W, 395);
+            Image imagen = ImageIO.read(getClass().getResource("/resources/images/car1.png")).getScaledInstance(275,225,Image.SCALE_DEFAULT);
+            g.drawImage(imagen, width/2 -imagen.getWidth(this)/2, height-imagen.getHeight(this)/2, this);
         }
 
         void drawQuad(Graphics g, Color c, int x1, int y1, int w1, int x2, int y2, int w2){

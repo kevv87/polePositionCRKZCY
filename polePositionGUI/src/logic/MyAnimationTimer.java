@@ -17,7 +17,7 @@ public class MyAnimationTimer extends AnimationTimer{
     //private RoadAppMain.DrawPanel drawPanel;
     double ddy;
 
-    public MyAnimationTimer(GameScreen pantalla, double startNanoTime, final Pista pista) {
+    public MyAnimationTimer(GameScreen pantalla, double startNanoTime, final Pista pista){
         this.pantalla = pantalla;
         this.startNanoTime = startNanoTime;
         this.pista = pista;

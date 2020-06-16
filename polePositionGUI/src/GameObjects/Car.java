@@ -12,7 +12,7 @@ public class Car extends Drawable{
         velocidad = 0;
         aceleracion = 0;
         this.posX = 200;
-        imagen = new Image("./images/car1.png");
+        imagen = new Image("resources/images/car1.png");
     }
 
     // Funcion que hace que avance el carro, segun la cantidad de nani
