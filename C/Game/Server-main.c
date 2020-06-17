@@ -98,8 +98,8 @@ int main(int argc , char *argv[]){
         /***********************
           Escucha a los clientes
         ***********************/
-        //pthread_create(&juego_hilo, NULL, juego(), NULL);
-        while (TRUE) {
+        int cont_clientes = 0;
+        while(cont_clientes < 2){
             //clear the socket set
             FD_ZERO(&readfds);
 
@@ -123,7 +123,7 @@ int main(int argc , char *argv[]){
 
             //wait for an activity on one of the sockets , timeout is NULL ,
             //so wait indefinitely
-            activity = select(max_sd + 1, &readfds, NULL, NULL, NULL);
+            activity = select(max_sd + 1, &readfds, NULL, NULL, 5);
 
             if ((activity < 0) && (errno != EINTR)) {
                 printf("select error");
@@ -162,11 +162,13 @@ int main(int argc , char *argv[]){
                             printf("%d\n", jugador2.client);
                         }
                         printf("Adding to list of sockets as %d\n", i);
+                        cont_clientes+=1;
                         break;
                     }
                 }
             }
-
+        }
+        while (partida == 1) {
             //else its some IO operation on some other socket
             for (i = 0; i < max_clients; i++) {
                 sd = client_socket[i];
@@ -223,6 +225,5 @@ int main(int argc , char *argv[]){
             colision(jugador2);
         }
     }
-    pthread_join(juego_hilo, NULL);
     return 0;
 }

@@ -6,5 +6,3 @@ set(CMAKE_C_STANDARD 99)
 add_executable(Game Juego.c ListaEnlazada.h ListaEnlazada.c "Server-main.c")
 
 target_link_libraries(Game m)
-find_package(Threads REQUIRED)
-target_link_libraries(Game Threads::Threads)
