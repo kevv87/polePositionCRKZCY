@@ -65,7 +65,7 @@ Elementos internos del juego
 int continuar, partida, pista_tamano;
 
 //Constante de aceleracion de los carros
-float k;
+double k;
 
 //Estructura para ambos jugadores
 struct Jugador jugador1, jugador2;
@@ -132,7 +132,13 @@ void frenar(Jugador_t jugador);
 /* juego()
  * Funcion que inicia un juego
  */
-void juego();
+void *juego();
+
+/* actualizarJugador()
+ * Funcion que actualiza valores del jugador
+ * segun los comandos del cliente
+ */
+void actualizarJugador(Jugador_t jugador, char input[5]);
 
 /* meta()
  * Funcion que determina si la carrera acabo

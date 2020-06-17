@@ -1,18 +1,19 @@
 //
 // Created by cvaz on 6/15/20.
 //
-#include <stdio.h>
-#include <string.h> //strlen
-#include <stdlib.h>
-#include <errno.h>
-#include <unistd.h> //close
 #include <arpa/inet.h> //close
+#include <errno.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h> //strlen
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <math.h>
-#include <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
 #include <time.h>
+#include <unistd.h> //close
+
 #include "Juego.h"
 
 #define TRUE 1
@@ -24,16 +25,17 @@ int main(int argc , char *argv[]){
        Valores del juego
     ***********************/
     continuar = 1;
-    k = -0.2463;
-    setJugador(jugador1);
-    setJugador(jugador2);
-    srand(time(0));
+    //k = -0.2463;
+    //setJugador(jugador1);
+    //setJugador(jugador2);
+    //srand(time(0));
+    pthread_t juego_hilo;
 
     /***********************
      Valores del servidor
     ***********************/
     int opt = TRUE;
-    int master_socket, addrlen, new_socket, client_socket[3], max_clients = 3, activity, i , valread , sd;
+    int master_socket, addrlen, new_socket, client_socket[2], max_clients = 2, activity, i , valread , sd;
     int max_sd;
     struct sockaddr_in address;
 
@@ -96,6 +98,7 @@ int main(int argc , char *argv[]){
         /***********************
           Escucha a los clientes
         ***********************/
+        //pthread_create(&juego_hilo, NULL, juego(), NULL);
         while (TRUE) {
             //clear the socket set
             FD_ZERO(&readfds);
@@ -150,6 +153,14 @@ int main(int argc , char *argv[]){
                     //if position is empty
                     if (client_socket[i] == 0) {
                         client_socket[i] = new_socket;
+                        if(i == 0){
+                            jugador1.client = client_socket[i];         //Asigna un socket al jugador1
+                            printf("%d\n", jugador1.client);
+                        }
+                        else if(i == 1){
+                            jugador2.client = client_socket[i];         //Asigna un socket al jugador2
+                            printf("%d\n", jugador2.client);
+                        }
                         printf("Adding to list of sockets as %d\n", i);
                         break;
                     }
@@ -159,6 +170,7 @@ int main(int argc , char *argv[]){
             //else its some IO operation on some other socket
             for (i = 0; i < max_clients; i++) {
                 sd = client_socket[i];
+                printf("%d\n", sd);
 
                 if (FD_ISSET(sd, &readfds)) {
                     //Check if it was for closing , and also read the
@@ -197,6 +209,9 @@ int main(int argc , char *argv[]){
                Ejecucion del juego
             ***********************/
             meta();
+            //actualizarJugador(jugador1);
+            //actualizarJugador(jugador2);
+            printf("El tamano de la pista es: %d", pista_tamano);
             t_actual = clock();
             t_transcurrido = t_actual - t_referencia;
             avanzar(jugador1, t_transcurrido);
@@ -208,5 +223,6 @@ int main(int argc , char *argv[]){
             colision(jugador2);
         }
     }
+    pthread_join(juego_hilo, NULL);
     return 0;
 }

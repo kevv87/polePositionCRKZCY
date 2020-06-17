@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
 #include "Juego.h"
 
 void setJugador(Jugador_t jugador){
@@ -80,20 +81,22 @@ int meta(){
     }
 }
 
-void juego(){
+void *juego(){
     continuar = 1;
+    k = -0.2463;
     setJugador(jugador1);
-    asignarColor(jugador1, 0);
     setJugador(jugador2);
-    asignarColor(jugador2, 1);
     srand(time(0));
     while(continuar!=0){
         partida = 1;
         pista_tamano = (rand() %(35 -15 +1)) +15;
         t_referencia = clock();
         while(partida!=0){
+            sleep(1);
             meta();
+            printf("El tamano de la pista es: %d\n", pista_tamano);
             t_actual = clock();
+            printf("El tiempo actual es: %ld\n", t_actual);
             t_transcurrido = t_actual - t_referencia;
             avanzar(jugador1, t_transcurrido);
             t_actual = clock();
@@ -103,5 +106,29 @@ void juego(){
             colision(jugador1);
             colision(jugador2);
         }
+    }
+}
+
+void actualizarJugador(Jugador_t jugador, char input[5]){
+    //Permite el uso de WASD o las flechas del teclado
+    //Formato: I+tecla --> Usuario presiona dicha tecla
+    if((input == "IUP") || (input == "IW")){
+        jugador.movimiento_avance = 'w';
+    }
+    else if((input == "ILEFT") || (input == "IA")){
+        jugador.movimiento_lateral = 'a';
+    }
+    else if((input == "IRIGHT") || (input == "ID")){
+        jugador.movimiento_lateral = 'd';
+    }
+    //Formato: R+Tecla --> Usuario suelta (release) dicha tecla
+    if((input == "RUP") || (input == "RW")){
+        jugador.movimiento_avance = '_';
+    }
+    else if((input == "RLEFT") || (input == "RA")){
+        jugador.movimiento_lateral = '_';
+    }
+    else if((input == "RRIGHT") || (input == "RD")){
+        jugador.movimiento_lateral = '_';
     }
 }
