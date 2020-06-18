@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 public abstract class Drawable {
     protected double posM; // Position in meters from the start
     protected double posX; // Posicion en x en la calle.
-    public Image imagen; // Imagen a dibujar
+    public String imagen; // Imagen a dibujar
     protected double imagenSize;
 
     public double distanceFromCamera(Camera camera){
@@ -15,7 +15,7 @@ public abstract class Drawable {
     };
 
     public void resizeImage(double height, double width){
-        imagen = new Image(this.imagen.getUrl(), width, height, true, true);
+        //imagen = new Image(this.imagen.getUrl(), width, height, true, true);
     }
 
     public double getPosM() {
@@ -30,7 +30,7 @@ public abstract class Drawable {
     public void modifySize(double newSize){
         if(newSize!= imagenSize){
             imagenSize = newSize;
-            imagen = new Image(imagen.getUrl(), imagenSize, imagenSize, true, true);
+            //imagen = new Image(imagen.getUrl(), imagenSize, imagenSize, true, true);
         }
     }
 }

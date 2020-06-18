@@ -1,5 +1,7 @@
 package pseudo3dRacing;
 
+import GameObjects.Car;
+import GameObjects.Drawable;
 import GameObjects.Static;
 
 import javax.imageio.ImageIO;
@@ -12,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -31,6 +34,8 @@ public class RoadAppMain extends JFrame {
     boolean left;
     boolean right;
 
+    Car myCar;
+
 
     int N;
     int roadW = 2000;
@@ -41,7 +46,12 @@ public class RoadAppMain extends JFrame {
 
         // Aqui se genera el mapa
         ArrayList<Static> objetos = new ArrayList<Static>();
-        objetos.add(new Static("hueco", 35000, 100));
+        // Add static objects
+        objetos.add(new Static("hueco", 35000, 1000));
+        objetos.add(new Static("palm",35000, roadW+500));
+
+
+        myCar = new Car(0);
         DrawPanel drawPanel = new DrawPanel(objetos);
         for(int i=0;i<1600;i++){
             Line line = new Line();
@@ -104,12 +114,14 @@ public class RoadAppMain extends JFrame {
                 down = true;
                 //drawPanel.repaint();
             }
-            if(event.getKeyCode() == KeyEvent.VK_RIGHT){
+            if(event.getKeyCode() == KeyEvent.VK_LEFT){
                 right = true;
+                myCar.right();
                 //drawPanel.repaint();
             }
-            if (event.getKeyCode() == KeyEvent.VK_LEFT){
+            if (event.getKeyCode() == KeyEvent.VK_RIGHT){
                 left = true;
+                myCar.left();
                 //drawPanel.repaint();
             }
             /*if(draw){
@@ -127,12 +139,14 @@ public class RoadAppMain extends JFrame {
                 down = false;
                 //drawPanel.repaint();
             }
-            if(event.getKeyCode() == KeyEvent.VK_RIGHT){
+            if(event.getKeyCode() == KeyEvent.VK_LEFT){
                 right = false;
+                myCar.normal();
                 //drawPanel.repaint();
             }
-            if (event.getKeyCode() == KeyEvent.VK_LEFT){
+            if (event.getKeyCode() == KeyEvent.VK_RIGHT){
                 left = false;
+                myCar.normal();
                 //drawPanel.repaint();
             }
         }
@@ -188,6 +202,8 @@ public class RoadAppMain extends JFrame {
             int startPos = (int) (pos/segL);
             double x=0, dx= 0;
 
+            ArrayList<Static> pendingDraw = new ArrayList<>();
+
             for(int n=startPos; n<startPos+300;n++){
                 Line l = lines.get(n%N);
 
@@ -219,7 +235,9 @@ public class RoadAppMain extends JFrame {
                 for (Static objeto:objetos
                 ) {
                     if(objeto.getPosM() == l.z && objeto.getPosM() - pos <33000){
-                        drawImg(g, "hueco", (int)p.X,(int)p.Y,(int)p.W,(int)l.x,(int)l.Y,(int)l.W, objeto, pos, 1500, playerX-(int)x);
+                        pendingDraw.add(new Static(g, objeto.type, (int)p.x,(int)p.Y,(int)p.W,playerX-(int)x, pos, objeto.getPosM(), objeto.getPosX()));
+                        //System.out.println(l.X);
+                        //drawImg(g, "hueco", (int)l.x,(int)l.Y,(int)l.W, objeto,pos,playerX-(int)x);
                     }
                 }
                 drawQuad(g,grass,0, (int) p.Y, width, 0, (int)l.Y, width);
@@ -227,11 +245,18 @@ public class RoadAppMain extends JFrame {
                 drawQuad(g, road, (int)p.X, (int)p.Y, (int)p.W, (int)l.X,(int)l.Y, (int)l.W);
 
             }
+            for (Static objeto:pendingDraw
+                 ) {
+                //System.out.println(objeto.x);
+                drawImg(g,objeto.type,objeto.x,objeto.y, objeto.w, objeto, objeto.camZ, objeto.camX);
+            }
             Graphics skyG=g;
             skyG.setColor(Color.blue);
             skyG.fillRect(0,0,D_W, 395);
-            Image imagen = ImageIO.read(getClass().getResource("/resources/images/car1.png")).getScaledInstance(275,225,Image.SCALE_DEFAULT);
-            g.drawImage(imagen, width/2 -imagen.getWidth(this)/2, height-imagen.getHeight(this)/2, this);
+
+            // Draw my car
+            Image imagen = ImageIO.read(getClass().getResource(myCar.imagen)).getScaledInstance(275,200,Image.SCALE_DEFAULT);
+            g.drawImage(imagen, width/2 -imagen.getWidth(this)/2, height-imagen.getHeight(this)/2, this); // Draw car
         }
 
         void drawQuad(Graphics g, Color c, int x1, int y1, int w1, int x2, int y2, int w2){
@@ -243,21 +268,25 @@ public class RoadAppMain extends JFrame {
             graphics.fillPolygon(xpoints, yPoints, nPoints);
         }
 
-        void drawImg(Graphics g, String type, int x1, int y1, int w1, int x2, int y2, int w2, Static objeto, double camZ, int camY, double camX){
+        void drawImg(Graphics g, String type, int x1, int y1, int w1, Static objeto, double camZ, double camX){
             Image imagen = null;
             double scale = camD/(objeto.getPosM()-camZ);
-            double X=(1+scale*((x2)-camX))*width/2;
+            double X=(1+scale*(x1+objeto.getPosX()-camX))*width/2;
+
             try {
+                /*
                 if (type.equals("hueco")) {
-                    imagen = ImageIO.read(getClass().getResource("/resources/images/obs.png")).getScaledInstance(w1/3,w1/3,Image.SCALE_DEFAULT);
-                }
+                    imagen = ImageIO.read(getClass().getResource("/resources/images/obs.png")).getScaledInstance(w1/2,w1/2,Image.SCALE_DEFAULT);
+                }*/
+                imagen = ImageIO.read(getClass().getResource(objeto.imagen)).getScaledInstance(w1/4,w1/4, Image.SCALE_DEFAULT);
             }catch(IOException e){
                 System.out.println(e);
             }
-            //System.out.println(X);
+            System.out.println(X);
             //System.out.println(camD/objeto.getPosM());
             //System.out.println("1.Scale: "+scale+ " camD: " + camD+ "z: "+objeto.getPosM() + "camz: " + camZ);
-            g.drawImage(imagen, (int)(X),y2,this);
+            g.drawImage(imagen, (int)(X),y1-imagen.getHeight(this),this);
+            //System.out.println("Scale: "+scale+" x: "+x1+" camX: "+ camX+" camD: "+camD);
         }
 
         public Dimension getPreferredSize(){

@@ -12,7 +12,7 @@ public class Car extends Drawable{
         velocidad = 0;
         aceleracion = 0;
         this.posX = 200;
-        imagen = new Image("resources/images/car1.png");
+        imagen = "/resources/images/car1.png";
     }
 
     // Funcion que hace que avance el carro, segun la cantidad de nani
@@ -21,12 +21,16 @@ public class Car extends Drawable{
         posM+=velocidad/3600;
     }
 
+    public void normal(){
+        imagen = "/resources/images/car1.png";
+    }
+
     public void right(){
-        this.posX += 20;
+        imagen= "/resources/images/carL.png";
     }
 
     public void left(){
-        this.posX -= 20;
+        imagen = "/resources/images/carR.png";
     }
 
     public void acelerar(double dv){

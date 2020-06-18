@@ -20,7 +20,7 @@ public class Pista {
         camera.updatePos();
         if(camera != null && camera.getAttached() != null){
             camera.getAttached().resizeImage(200, 200);
-            gc.drawImage(camera.getAttached().imagen, camera.getAttached().getPosX(), 520);  // Dibujando el attached de la camara, siempre tiene y constante
+            //gc.drawImage(camera.getAttached().imagen, camera.getAttached().getPosX(), 520);  // Dibujando el attached de la camara, siempre tiene y constante
             for (Static objeto: objetos) {
                 if(objeto.posM - camera.getPosM() <= 1){
                     objeto.draw(gc, objeto.posM - camera.getPosM());
