@@ -23,7 +23,7 @@ public abstract class Drawable {
     }
 
     public double getPosX() {
-        return (posX+imagen.getWidth())/2;
+        return posX;
     }
 
     // Modifica el tamaño de la imagen del drawable

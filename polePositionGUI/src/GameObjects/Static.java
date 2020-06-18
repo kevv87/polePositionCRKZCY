@@ -15,13 +15,14 @@ public class Static extends Drawable{
         this.posX = posX;
         this.type = type;
         v = 0;
+        /*
         if(type == "vida"){
-            imagen = new Image("./images/vida.png", 50, 50, true, true);
+            imagen = new Image("resources/images/vida.png", 50, 50, true, true);
         }else if(type == "hueco"){
-            imagen = new Image("./images/obs.png", 100, 100, true, true);
+            imagen = new Image("resources/images/obs.png", 100, 100, true, true);
         }else if(type=="boost"){
-            imagen = new Image("./images/boost.png", 50, 50, true, true);
-        }
+            imagen = new Image("resources/images/boost.png", 50, 50, true, true);
+        }*/
     }
 
     public void modifySize(double newSize){

@@ -1,5 +1,7 @@
 package pseudo3dRacing;
 
+import GameObjects.Static;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +13,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RoadAppMain extends JFrame {
 
     private static final int D_W=1500;
     private static final int D_H=1200;
-    DrawPanel drawPanel = new DrawPanel();
     ArrayList<Line> lines = new ArrayList<Line>();
 
     int width=1600;
@@ -38,6 +40,9 @@ public class RoadAppMain extends JFrame {
     public RoadAppMain(){
 
         // Aqui se genera el mapa
+        ArrayList<Static> objetos = new ArrayList<Static>();
+        objetos.add(new Static("hueco", 35000, 100));
+        DrawPanel drawPanel = new DrawPanel(objetos);
         for(int i=0;i<1600;i++){
             Line line = new Line();
             line.z = i*segL;
@@ -134,7 +139,11 @@ public class RoadAppMain extends JFrame {
     }
 
     private class DrawPanel extends JPanel{
-        public DrawPanel() {
+
+        ArrayList<Static> objetos;
+
+        public DrawPanel(ArrayList<Static> objetos) {
+            this.objetos = objetos;
             InputMap inputMap = getInputMap();
             ActionMap actionMap = getActionMap();
             //this.setPreferredSize(getPrefferredSize());
@@ -179,10 +188,9 @@ public class RoadAppMain extends JFrame {
             int startPos = (int) (pos/segL);
             double x=0, dx= 0;
 
-
-
             for(int n=startPos; n<startPos+300;n++){
                 Line l = lines.get(n%N);
+
                 //System.out.println("Pos: " + pos + " posx: " +playerX );
                 //System.out.println(l.z);
                 if(playerX>roadW+100){
@@ -191,6 +199,7 @@ public class RoadAppMain extends JFrame {
                     playerX = -roadW-100;
                 }
                 l.project(playerX-(int)x, 1500, pos);
+
 
 
                 x+=dx;
@@ -206,7 +215,13 @@ public class RoadAppMain extends JFrame {
                 }else{
                     p=lines.get((n-1) % N);
                 }
-
+                //System.out.println(l.z);
+                for (Static objeto:objetos
+                ) {
+                    if(objeto.getPosM() == l.z && objeto.getPosM() - pos <33000){
+                        drawImg(g, "hueco", (int)p.X,(int)p.Y,(int)p.W,(int)l.x,(int)l.Y,(int)l.W, objeto, pos, 1500, playerX-(int)x);
+                    }
+                }
                 drawQuad(g,grass,0, (int) p.Y, width, 0, (int)l.Y, width);
                 drawQuad(g, rumble, (int)p.X, (int) p.Y, (int)(p.W*1.2),(int)l.X,(int)l.Y, (int)(l.W*1.2));
                 drawQuad(g, road, (int)p.X, (int)p.Y, (int)p.W, (int)l.X,(int)l.Y, (int)l.W);
@@ -228,6 +243,23 @@ public class RoadAppMain extends JFrame {
             graphics.fillPolygon(xpoints, yPoints, nPoints);
         }
 
+        void drawImg(Graphics g, String type, int x1, int y1, int w1, int x2, int y2, int w2, Static objeto, double camZ, int camY, double camX){
+            Image imagen = null;
+            double scale = camD/(objeto.getPosM()-camZ);
+            double X=(1+scale*((x2)-camX))*width/2;
+            try {
+                if (type.equals("hueco")) {
+                    imagen = ImageIO.read(getClass().getResource("/resources/images/obs.png")).getScaledInstance(w1/3,w1/3,Image.SCALE_DEFAULT);
+                }
+            }catch(IOException e){
+                System.out.println(e);
+            }
+            //System.out.println(X);
+            //System.out.println(camD/objeto.getPosM());
+            //System.out.println("1.Scale: "+scale+ " camD: " + camD+ "z: "+objeto.getPosM() + "camz: " + camZ);
+            g.drawImage(imagen, (int)(X),y2,this);
+        }
+
         public Dimension getPreferredSize(){
             return new Dimension(D_W, D_H);
         }
@@ -246,6 +278,8 @@ public class RoadAppMain extends JFrame {
         void project(double camX, int camY, double camZ){
             scale = camD/(z-camZ);
             X=(1+scale*(x-camX))*width/2;
+            //System.out.println(X);
+            //System.out.println("1.Scale: "+scale+ " camD: " + camD+ "z: "+z + "camz: " + camZ);
             Y=(1-scale*(y-camY))*height/2;
             W=scale*roadW*width/2;
         }
