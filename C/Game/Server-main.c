@@ -233,6 +233,7 @@ int main(int argc , char *argv[]){
                         //of the data read
                         printf("Estoy en el echo else");
                         printf("Client: %s\n", buffer);
+                        //APLICA CAMBIOS EN EL JUEGO SEGUN EL INPUT DEL USUARIO
                         if(sd == jugador1.client){
                             inputJugador(jugador1, buffer);
                         }
@@ -258,8 +259,6 @@ int main(int argc , char *argv[]){
             t_transcurrido = t_actual - t_referencia;
             moverBalas(t_transcurrido);
             avanzar(jugador1, t_transcurrido);
-            t_actual = clock();
-            t_transcurrido = t_actual - t_referencia;
             avanzar(jugador2, t_transcurrido);
             t_referencia = t_actual;
             colision(jugador1);

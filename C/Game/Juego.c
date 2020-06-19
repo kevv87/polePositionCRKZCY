@@ -44,6 +44,7 @@ void asignarColor(Jugador_t jugador, int color){
 void avanzar(Jugador_t jugador, float tiempo){
     if(jugador.movimiento_avance == 'w'){
         jugador.t_acumulado += tiempo;
+        //Si el jugador esta en los margenes de la carretera
         if(abs(jugador.pos_X) <= 5){
             avanzar_carretera(jugador, tiempo);
         }
@@ -56,9 +57,11 @@ void avanzar(Jugador_t jugador, float tiempo){
     }
 }
 
+//*******************************************************************CONSIDERAR CAMBIAR A MRUA
+//*******************************************************************
 void avanzar_carretera(Jugador_t jugador, float tiempo){
     jugador.pos_Y += tiempo*jugador.rapidez;
-    jugador.rapidez = 210*(-exp((jugador.t_acumulado)*k) + 1);
+    jugador.rapidez = 170*(-exp((jugador.t_acumulado)*k) + 1);
 }
 
 void avanzar_cesped(Jugador_t jugador, float tiempo){
@@ -73,7 +76,7 @@ void moverBalas(float tiempo){
 
 void moverBalas_aux(Jugador_t jugador, float tiempo){
     if(jugador.disparo_activo == 1){
-        //Si la bala ha avanzado mas de 100m, desaparece
+        //Si la bala ha avanzado mas de 100m respecto al lider, desaparece
         if((jugador.disparo.pos_y - lider->pos_Y) > 100.0){
             jugador.disparo_activo = 0;
             jugador.disparo.pos_x = 0;
@@ -94,15 +97,13 @@ int colision(Jugador_t jugador){
 }
 
 void frenar(Jugador_t jugador){
-    if(jugador.movimiento_avance == '_'){
-        if(abs(jugador.pos_X) <= 5){        //Si el jugador esta en la carretera
-            jugador.t_acumulado = (log(1-(jugador.rapidez/210)))/k;
-        }
-        else{       //Si el jugador esta en el cesped
-            jugador.t_acumulado = (log(1-(jugador.rapidez/80)))/k;
-        }
-        jugador.t_acumulado -= 5;
+    if(abs(jugador.pos_X) <= 5){        //Si el jugador esta en la carretera
+        jugador.t_acumulado = (log(1-(jugador.rapidez/170)))/k;
     }
+    else{       //Si el jugador esta en el cesped
+        jugador.t_acumulado = (log(1-(jugador.rapidez/80)))/k;
+    }
+    jugador.t_acumulado -= 5;
 }
 
 void disparar(Jugador_t jugador){
