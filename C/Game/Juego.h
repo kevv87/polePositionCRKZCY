@@ -9,9 +9,19 @@
 Estructuras del juego
 **********************/
 /*
+*Estructura de las balas
+*/
+typedef struct Disparo{
+    float pos_x;        //Posicion de la bala respecto a l centro de la pantalla en metros
+    float pos_y;        //Posicion de la bala respecto al punto de partida
+} Disparo_t;
+
+/*
  * Estructura de los jugadores
  */
 typedef struct Jugador{
+    //Identificadores del jugador
+    int vidas;                  //Vidas restantes del jugador
     //Socket del jugador
     int client;
 
@@ -23,6 +33,9 @@ typedef struct Jugador{
     int colision;       //Indicador booleano de colision
     int color;          //Indicador del color escogido 0-Azul/1-Rojo/2-Amarillo/3-Verde
     int puntaje;        //Contador del puntaje
+    int disparo_activo; //Indicador de si disparo activo
+
+    Disparo_t disparo;  //Disparo asociado al jugador
 
     //Contadores del progreso del jugador
     float aceleracion;  //Contador de aceleracion
@@ -32,15 +45,6 @@ typedef struct Jugador{
     float t_acumulado;  //Contador de tiempo acumulado para calcular rapidez
 } Jugador_t;
 
-/*
-*Estructura de las balas
-*/
-typedef struct Bala{
-    int rapidez;        //Rapidez constante de la bala
-
-    float pos_x;        //Posicion de la bala respecto a l centro de la pantalla en metros
-    float pos_y;        //Posicion de la bala respecto al punto de partida
-} Bala_t;
 
 /*
  * Estructura de la pista
@@ -67,8 +71,9 @@ int continuar, partida, pista_tamano;
 //Constante de aceleracion de los carros
 double k;
 
-//Estructura para ambos jugadores
-struct Jugador jugador1, jugador2;
+//Estructura para ambos jugadores y puntero para saber cual va delante
+struct Jugador jugador1, jugador2, *lider;
+struct Disparo disparo_jugador1, disparo_jugador2;
 
 //Lista de disparos y colisionables
 NodePointer disparos, colisionables;
@@ -84,6 +89,11 @@ clock_t t_referencia, t_actual, t_transcurrido;
  * args: -struct jugador (estructura del jugador)
  */
 void setJugador(struct Jugador jugador);
+
+/* delantera()
+ * Funcion que determina quien va a la delantera
+ */
+void delantera();
 
 /* asignarColor()
  * Funcion que asigna el color escogido al jugador
@@ -115,7 +125,12 @@ void avanzar_cesped(Jugador_t jugador, float tiempo);
 /* moverBalas()
  * Funcion que mueve las balas segun sus valores
  */
-void moverBalas();
+void moverBalas(float tiempo);
+
+/* moverBalas_aux()
+ * Funcion que mueve la bala del jugador
+ */
+void moverBalas_aux(Jugador_t jugador, float tiempo);
 
 /* colision()
  * Funcion que determina si una bala colisiono con algun jugador
@@ -129,16 +144,23 @@ int colision(Jugador_t jugador);
  */
 void frenar(Jugador_t jugador);
 
+/* frenar()
+ * Funcion que inicia el disparo del jugador
+ * args: -struct jugador (estructura del jugador)
+ */
+void disparar(Jugador_t jugador);
+
 /* juego()
  * Funcion que inicia un juego
  */
 void *juego();
 
 /* actualizarJugador()
- * Funcion que actualiza valores del jugador
- * segun los comandos del cliente
+ * Funcion que actualiza valores del jugador segun los comandos del cliente
+ * args: -struct jugador (estructura del jugador)
+ *       -char input[64] (mensaje recibido del cliente)
  */
-void actualizarJugador(Jugador_t jugador, char input[5]);
+void inputJugador(Jugador_t jugador, char input[64]);
 
 /* meta()
  * Funcion que determina si la carrera acabo

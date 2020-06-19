@@ -4,11 +4,9 @@
 #include <arpa/inet.h> //close
 #include <errno.h>
 #include <netinet/in.h>
-#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> //strlen
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
 #include <time.h>
@@ -20,16 +18,19 @@
 #define FALSE 0
 #define PORT 8888
 
+struct timeval timeout;
+
 int main(int argc , char *argv[]){
+    timeout.tv_sec = 5;
     /***********************
        Valores del juego
     ***********************/
     continuar = 1;
-    //k = -0.2463;
-    //setJugador(jugador1);
-    //setJugador(jugador2);
-    //srand(time(0));
-    pthread_t juego_hilo;
+    k = -0.2463;
+    setJugador(jugador1);
+    setJugador(jugador2);
+    lider = &jugador1;
+    srand(time(0));
 
     /***********************
      Valores del servidor
@@ -45,7 +46,7 @@ int main(int argc , char *argv[]){
     fd_set readfds;
 
     //a message
-    char *message = "Welcome \r\n";
+    char *message = " Welcome \r\n";
 
     //initialise all client_socket[] to 0 so not checked
     for (i = 0; i < max_clients; i++){
@@ -60,7 +61,7 @@ int main(int argc , char *argv[]){
 
     //set master socket to allow multiple connections ,
     //this is just a good habit, it will work without this
-    if( setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0 ){
+    if(setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0 ){
         perror("setsockopt");
         exit(EXIT_FAILURE);
     }
@@ -85,7 +86,7 @@ int main(int argc , char *argv[]){
 
     //accept the incoming connection
     addrlen = sizeof(address);
-    puts("Waiting for connections ...");
+    puts("Waiting for connections ...");    //****************HASTA AQUI***************\\
 
     /***********************
      Crea una partida nueva
@@ -123,7 +124,7 @@ int main(int argc , char *argv[]){
 
             //wait for an activity on one of the sockets , timeout is NULL ,
             //so wait indefinitely
-            activity = select(max_sd + 1, &readfds, NULL, NULL, 5);
+            activity = select(max_sd + 1, &readfds, NULL, NULL, &timeout);
 
             if ((activity < 0) && (errno != EINTR)) {
                 printf("select error");
@@ -144,6 +145,13 @@ int main(int argc , char *argv[]){
                 //send new connection greeting message
                 if (send(new_socket, message, strlen(message), 0) != strlen(message)) {
                     perror("send");
+                }
+                //Vincula un socket a cada jugador
+                if(i == 0){
+                    jugador1.client = new_socket;
+                }
+                if(i == 1){
+                    jugador2.client = new_socket;
                 }
 
                 puts("Welcome message sent successfully");
@@ -169,10 +177,38 @@ int main(int argc , char *argv[]){
             }
         }
         while (partida == 1) {
+            //clear the socket set
+            FD_ZERO(&readfds);
+
+            //add master socket to set
+            FD_SET(master_socket, &readfds);
+            max_sd = master_socket;
+
+            //add child sockets to set
+            for (i = 0; i < max_clients; i++) {
+                //socket descriptor
+                sd = client_socket[i];
+
+                //if valid socket descriptor then add to read list
+                if (sd > 0)
+                    FD_SET(sd, &readfds);
+
+                //highest file descriptor number, need it for the select function
+                if (sd > max_sd)
+                    max_sd = sd;
+            }
+
+            //wait for an activity on one of the sockets , timeout is 10 ,
+            //so wait indefinitely
+            activity = select(max_sd + 1, &readfds, NULL, NULL, &timeout);
+
+            if ((activity < 0) && (errno != EINTR)) {
+                printf("select error");
+            }
+
             //else its some IO operation on some other socket
             for (i = 0; i < max_clients; i++) {
                 sd = client_socket[i];
-                printf("%d\n", sd);
 
                 if (FD_ISSET(sd, &readfds)) {
                     //Check if it was for closing , and also read the
@@ -195,15 +231,21 @@ int main(int argc , char *argv[]){
                     else {
                         //set the string terminating NULL byte on the end
                         //of the data read
+                        printf("Estoy en el echo else");
                         printf("Client: %s\n", buffer);
+                        if(sd == jugador1.client){
+                            inputJugador(jugador1, buffer);
+                        }
+                        else{
+                            inputJugador(jugador2, buffer);
+                        }
                         bzero(buffer, 255);
-                        valread = write(sd, buffer, strlen(buffer));
+                        //valread = write(sd, buffer, strlen(buffer));
                         buffer[valread] = '\0';
                         //Server input
                         bzero(buffer, 255);
-                        //fgets(buffer, 255, stdin);
-                        write(sd, message, strlen(message));
-                        send(sd, message, strlen(message), 0);
+                        //write(sd, message, strlen(message));
+                        //send(sd, message, strlen(message), 0);
                     }
                 }
             }
@@ -211,11 +253,10 @@ int main(int argc , char *argv[]){
                Ejecucion del juego
             ***********************/
             meta();
-            //actualizarJugador(jugador1);
-            //actualizarJugador(jugador2);
-            printf("El tamano de la pista es: %d", pista_tamano);
+            //printf("El tamano de la pista es: %d\n", pista_tamano);
             t_actual = clock();
             t_transcurrido = t_actual - t_referencia;
+            moverBalas(t_transcurrido);
             avanzar(jugador1, t_transcurrido);
             t_actual = clock();
             t_transcurrido = t_actual - t_referencia;
@@ -223,6 +264,7 @@ int main(int argc , char *argv[]){
             t_referencia = t_actual;
             colision(jugador1);
             colision(jugador2);
+            delantera();
         }
     }
     return 0;

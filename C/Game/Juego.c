@@ -4,22 +4,37 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include <unistd.h>
 #include "Juego.h"
 
 void setJugador(Jugador_t jugador){
+    jugador.vidas = 3;
     jugador.client = 0;
     jugador.movimiento_avance = '_';
     jugador.movimiento_lateral = '_';
     jugador.colision = 0;
     jugador.color = 0;
     jugador.puntaje = 0;
+    jugador.disparo_activo = 0;
     jugador.aceleracion = 38.62;   // 38.62km/s basado en 60 millas en 2.5s (promedio)
     jugador.pos_X = 0;
     jugador.pos_Y = 0;
     jugador.rapidez = 0;
     jugador.t_acumulado = 0;
+
+    jugador.disparo.pos_x = 0;
+    jugador.disparo.pos_y = 0;
+}
+
+void delantera(){
+    if(jugador1.pos_Y >= jugador2.pos_Y){
+        lider = &jugador1;
+    }
+    else{
+        lider = &jugador2;
+    }
 }
 
 void asignarColor(Jugador_t jugador, int color){
@@ -51,7 +66,23 @@ void avanzar_cesped(Jugador_t jugador, float tiempo){
     jugador.rapidez = 80*(-exp((-jugador.t_acumulado)*k) + 1);
 }
 
-void moverBalas(){
+void moverBalas(float tiempo){
+    moverBalas_aux(jugador1, tiempo);
+    moverBalas_aux(jugador2, tiempo);
+}
+
+void moverBalas_aux(Jugador_t jugador, float tiempo){
+    if(jugador.disparo_activo == 1){
+        //Si la bala ha avanzado mas de 100m, desaparece
+        if((jugador.disparo.pos_y - lider->pos_Y) > 100.0){
+            jugador.disparo_activo = 0;
+            jugador.disparo.pos_x = 0;
+            jugador.disparo.pos_y = 0;
+        }
+        else{
+            jugador.disparo.pos_y += 330*tiempo;        //La bala avanza 330 metros por segundo
+        }
+    }
 
 }
 
@@ -74,8 +105,16 @@ void frenar(Jugador_t jugador){
     }
 }
 
+void disparar(Jugador_t jugador){
+    if(jugador.disparo_activo == 0){
+        jugador.disparo_activo = 1;
+        jugador.disparo.pos_x = jugador.pos_X;
+        jugador.disparo.pos_y = jugador.pos_Y;
+    }
+}
+
 int meta(){
-    if((jugador1.pos_Y >= pista_tamano) || (jugador2.pos_Y >= pista_tamano)){
+    if((jugador1.pos_Y >= (float)(pista_tamano*1000)) || (jugador2.pos_Y >= (float)(pista_tamano*1000))){
         partida = 0;
         printf("La carrera ha terminado!");
     }
@@ -109,26 +148,31 @@ void *juego(){
     }
 }
 
-void actualizarJugador(Jugador_t jugador, char input[5]){
+void inputJugador(Jugador_t jugador, char input[64]){
     //Permite el uso de WASD o las flechas del teclado
     //Formato: I+tecla --> Usuario presiona dicha tecla
-    if((input == "IUP") || (input == "IW")){
+    //         R+Tecla --> Usuario suelta (release) dicha tecla
+    if((strcmp(input, "IUP") == 0) || (strcmp(input, "IW") == 0)){
         jugador.movimiento_avance = 'w';
     }
-    else if((input == "ILEFT") || (input == "IA")){
+    else if((strcmp(input, "ILEFT") == 0) || (strcmp(input, "IA") == 0)){
         jugador.movimiento_lateral = 'a';
     }
-    else if((input == "IRIGHT") || (input == "ID")){
+    else if((strcmp(input, "IRIGHT") == 0) || (strcmp(input, "ID") == 0)){
         jugador.movimiento_lateral = 'd';
     }
-    //Formato: R+Tecla --> Usuario suelta (release) dicha tecla
-    if((input == "RUP") || (input == "RW")){
-        jugador.movimiento_avance = '_';
+    //F
+    else if((strcmp(input, "RUP") == 0) || (strcmp(input, "RW") == 0)){
+        jugador.movimiento_avance = 'w';
     }
-    else if((input == "RLEFT") || (input == "RA")){
-        jugador.movimiento_lateral = '_';
+    else if((strcmp(input, "RLEFT") == 0) || (strcmp(input, "RA") == 0)){
+        jugador.movimiento_lateral = 'a';
     }
-    else if((input == "RRIGHT") || (input == "RD")){
-        jugador.movimiento_lateral = '_';
+    else if((strcmp(input, "RRIGHT") == 0) || (strcmp(input, "RD") == 0)){
+        jugador.movimiento_lateral = 'd';
+    }
+    //Disparo del jugador
+    else if((strcmp(input, "ISPACE") == 0)){
+        disparar(jugador);
     }
 }
