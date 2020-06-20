@@ -72,14 +72,17 @@ int continuar, partida, pista_tamano;
 double k;
 
 //Estructura para ambos jugadores y puntero para saber cual va delante
-struct Jugador jugador1, jugador2, *lider;
+struct Jugador jugador1, jugador2;
+struct Jugador *jugador1_ptr, *jugador2_ptr, *lider;
 struct Disparo disparo_jugador1, disparo_jugador2;
 
 //Lista de disparos y colisionables
 NodePointer disparos, colisionables;
 
 //Tiempos del juego
-clock_t t_referencia, t_actual, t_transcurrido;
+clock_t t_referencia, t_actual;
+//Diferencia de tiempo entre t_referencia y t_actual
+double t_transcurrido;
 
 /****************************
     Funciones del juego
@@ -88,7 +91,7 @@ clock_t t_referencia, t_actual, t_transcurrido;
  * Funcion que inicializa los valores del jugador
  * args: -struct jugador (estructura del jugador)
  */
-void setJugador(struct Jugador jugador);
+void setJugador(Jugador_t *jugador);
 
 /* delantera()
  * Funcion que determina quien va a la delantera
@@ -106,49 +109,49 @@ void asignarColor(Jugador_t jugador, int color);
  * args: -struct jugador (estructura del jugador)
  *       -float tiempo (tiempo que ha avanzado)
  */
-void avanzar(Jugador_t jugador, float tiempo);
+void avanzar(Jugador_t *jugador, double tiempo);
 
 /* avanzar_carretera()
  * Funcion que mueve un carro en carretera segun sus valores
  * args: -struct jugador (estructura del jugador)
  *       -float tiempo (tiempo que ha avanzado)
  */
-void avanzar_carretera(Jugador_t jugador, float tiempo);
+void avanzar_carretera(Jugador_t *jugador, double tiempo);
 
 /* avanzar_cesped()
  * Funcion que mueve un carro en cesped segun sus valores
  * args: -struct jugador (estructura del jugador)
  *       -float tiempo (tiempo que ha avanzado)
  */
-void avanzar_cesped(Jugador_t jugador, float tiempo);
+void avanzar_cesped(Jugador_t *jugador, double tiempo);
 
 /* moverBalas()
  * Funcion que mueve las balas segun sus valores
  */
-void moverBalas(float tiempo);
+void moverBalas(Jugador_t *jugador1,Jugador_t *jugador2, double tiempo);
 
 /* moverBalas_aux()
  * Funcion que mueve la bala del jugador
  */
-void moverBalas_aux(Jugador_t jugador, float tiempo);
+void moverBalas_aux(Jugador_t *jugador, double tiempo);
 
 /* colision()
  * Funcion que determina si una bala colisiono con algun jugador
  * args: -struct jugador (estructura del jugador)
  */
-int colision(Jugador_t jugador);
+int colision(Jugador_t *jugador);
 
 /* frenar()
  * Funcion que frena al jugador si no esta acelerando
  * args: -struct jugador (estructura del jugador)
  */
-void frenar(Jugador_t jugador);
+void frenar(Jugador_t *jugador);
 
 /* frenar()
  * Funcion que inicia el disparo del jugador
  * args: -struct jugador (estructura del jugador)
  */
-void disparar(Jugador_t jugador);
+void disparar(Jugador_t *jugador);
 
 /* juego()
  * Funcion que inicia un juego
@@ -160,7 +163,7 @@ void *juego();
  * args: -struct jugador (estructura del jugador)
  *       -char input[64] (mensaje recibido del cliente)
  */
-void inputJugador(Jugador_t jugador, char input[64]);
+void inputJugador(Jugador_t *jugador, char input[64]);
 
 /* meta()
  * Funcion que determina si la carrera acabo

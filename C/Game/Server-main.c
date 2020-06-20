@@ -27,8 +27,10 @@ int main(int argc , char *argv[]){
     ***********************/
     continuar = 1;
     k = -0.2463;
-    setJugador(jugador1);
-    setJugador(jugador2);
+    jugador1_ptr = &jugador1;
+    jugador2_ptr = &jugador2;
+    setJugador(jugador1_ptr);
+    setJugador(jugador2_ptr);
     lider = &jugador1;
     srand(time(0));
 
@@ -40,7 +42,7 @@ int main(int argc , char *argv[]){
     int max_sd;
     struct sockaddr_in address;
 
-    char buffer[256]; //data buffer of 1K
+    char buffer[64]; //data buffer of 1K
 
     //set of socket descriptors
     fd_set readfds;
@@ -91,10 +93,9 @@ int main(int argc , char *argv[]){
     /***********************
      Crea una partida nueva
     ***********************/
-    while(continuar!=0) {
+    while(continuar != 0) {
         partida = 1;
         pista_tamano = (rand() %(35 -15 +1)) +15;
-        t_referencia = clock();
 
         /***********************
           Escucha a los clientes
@@ -125,7 +126,6 @@ int main(int argc , char *argv[]){
             //wait for an activity on one of the sockets , timeout is NULL ,
             //so wait indefinitely
             activity = select(max_sd + 1, &readfds, NULL, NULL, &timeout);
-
             if ((activity < 0) && (errno != EINTR)) {
                 printf("select error");
             }
@@ -147,11 +147,12 @@ int main(int argc , char *argv[]){
                     perror("send");
                 }
                 //Vincula un socket a cada jugador
-                if(i == 0){
-                    jugador1.client = new_socket;
+                if(cont_clientes == 0){
+                    jugador1_ptr->client = new_socket;
                 }
-                if(i == 1){
-                    jugador2.client = new_socket;
+                if(cont_clientes == 1){
+                    jugador2_ptr->client = new_socket;
+                    printf("El jugador 2 tiene como cliente *********** %d\n", jugador2_ptr->client);
                 }
 
                 puts("Welcome message sent successfully");
@@ -161,14 +162,6 @@ int main(int argc , char *argv[]){
                     //if position is empty
                     if (client_socket[i] == 0) {
                         client_socket[i] = new_socket;
-                        if(i == 0){
-                            jugador1.client = client_socket[i];         //Asigna un socket al jugador1
-                            printf("%d\n", jugador1.client);
-                        }
-                        else if(i == 1){
-                            jugador2.client = client_socket[i];         //Asigna un socket al jugador2
-                            printf("%d\n", jugador2.client);
-                        }
                         printf("Adding to list of sockets as %d\n", i);
                         cont_clientes+=1;
                         break;
@@ -177,6 +170,8 @@ int main(int argc , char *argv[]){
             }
         }
         while (partida == 1) {
+            //Inicia el timer
+            t_referencia = clock();
             //clear the socket set
             FD_ZERO(&readfds);
 
@@ -231,14 +226,15 @@ int main(int argc , char *argv[]){
                     else {
                         //set the string terminating NULL byte on the end
                         //of the data read
-                        printf("Estoy en el echo else");
+                        printf("Estoy en el echo else\n");
                         printf("Client: %s\n", buffer);
                         //APLICA CAMBIOS EN EL JUEGO SEGUN EL INPUT DEL USUARIO
-                        if(sd == jugador1.client){
-                            inputJugador(jugador1, buffer);
+                        printf("Este es el usuario: %d\n", sd);
+                        if(sd == jugador1_ptr->client){
+                            inputJugador(jugador1_ptr, buffer);
                         }
                         else{
-                            inputJugador(jugador2, buffer);
+                            inputJugador(jugador2_ptr, buffer);
                         }
                         bzero(buffer, 255);
                         //valread = write(sd, buffer, strlen(buffer));
@@ -253,16 +249,19 @@ int main(int argc , char *argv[]){
             /***********************
                Ejecucion del juego
             ***********************/
-            meta();
+            meta(jugador1_ptr, jugador2_ptr, pista_tamano);
             //printf("El tamano de la pista es: %d\n", pista_tamano);
-            t_actual = clock();
-            t_transcurrido = t_actual - t_referencia;
-            moverBalas(t_transcurrido);
-            avanzar(jugador1, t_transcurrido);
-            avanzar(jugador2, t_transcurrido);
-            t_referencia = t_actual;
-            colision(jugador1);
-            colision(jugador2);
+            if(jugador1_ptr->pos_Y != 0.0){
+                printf("%f\n", jugador1.pos_Y);
+            }
+            t_transcurrido = (double)(clock() - t_referencia);
+            sleep(1);
+            printf("%f\n", t_transcurrido);
+            moverBalas(jugador1_ptr, jugador2_ptr, t_transcurrido);
+            avanzar(jugador1_ptr, t_transcurrido);
+            avanzar(jugador2_ptr, t_transcurrido);
+            colision(jugador1_ptr);
+            colision(jugador2_ptr);
             delantera();
         }
     }
