@@ -66,25 +66,4 @@ public class Static extends Drawable{
         super.modifySize(newSize);
     }
 
-    // Metodo que dibuja al objeto estatico en funcion de la distancia en kilometros de la camara
-    public void draw(GraphicsContext gc, double distanciaCamara){
-        double size = 600;
-        double wanted = 1;
-        double distanciapx = size*distanciaCamara/(2*wanted);
-        double x2 = (2*size -4*posX)*2*distanciapx/(5*size) + posX;
-        //System.out.println(x2);
-        double y = (size-distanciapx-v);
-        if((size/2)/y >= 0.97){
-            modifySize(15);
-            v-=0;
-        }else if((size/2)/y >= 0.8){
-            modifySize(30);
-            v-=1;
-        }else{
-            modifySize(50);
-            v-=2;
-        }
-        System.out.println((size/2)/y);
-        //gc.drawImage(imagen, x2-imagen.getWidth()/2, y);
-    }
 }

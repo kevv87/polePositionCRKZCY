@@ -10,13 +10,6 @@ public abstract class Drawable {
     public String imagen; // Imagen a dibujar
     protected double imagenSize;
 
-    public double distanceFromCamera(Camera camera){
-        return posM - camera.getPosM();
-    };
-
-    public void resizeImage(double height, double width){
-        //imagen = new Image(this.imagen.getUrl(), width, height, true, true);
-    }
 
     public double getPosM() {
         return posM;
