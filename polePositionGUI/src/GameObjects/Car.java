@@ -9,7 +9,7 @@ public class Car extends Drawable{
 
     public Car(int pos){
         this.posM = pos;
-        velocidad = 0;
+        velocidad = 60;
         aceleracion = 0;
         this.posX = 200;
         imagen = "/resources/images/car1.png";

@@ -276,12 +276,7 @@ public class RoadAppMain extends JFrame {
 
             }
 
-            // Recorriendo la lista de objetos pendientes a dibujar y dibujando
-            for (Static objeto:pendingDraw
-                 ) {
-                //System.out.println(objeto.x);
-                drawImg(g,objeto.type,objeto.x,objeto.y, objeto.w, objeto, objeto.camZ, objeto.camX);
-            }
+
 
             //Dibujando cielo
             Graphics skyG=g;
@@ -291,6 +286,22 @@ public class RoadAppMain extends JFrame {
             // Draw my car
             Image imagen = ImageIO.read(getClass().getResource(myCar.imagen)).getScaledInstance(275,200,Image.SCALE_DEFAULT);
             g.drawImage(imagen, width/2 -imagen.getWidth(this)/2, height-imagen.getHeight(this)/2, this); // Draw car
+
+            // Recorriendo la lista de objetos pendientes a dibujar y dibujando
+            for (Static objeto:pendingDraw
+            ) {
+                //System.out.println(objeto.x);
+                drawImg(g,objeto.type,objeto.x,objeto.y, objeto.w, objeto, objeto.camZ, objeto.camX);
+            }
+
+            // Panel de informacion
+            g.setColor(Color.YELLOW);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 30));
+            g.drawString(Double.toString(tiempo), width/2-20, height/5);
+
+            g.drawRect(width/2-100,height/5 + 45, 200, 20);
+            g.setColor(Color.RED);
+            g.fillRect(width/2-100,height/5+45, (int)(200*myCar.getVelocidad()/120), 20);
         }
 
 
@@ -338,11 +349,11 @@ public class RoadAppMain extends JFrame {
             double X=(1+scale*(x1+objeto.getPosX()-camX))*width/2;
 
             try {
-                /*
-                if (type.equals("hueco")) {
-                    imagen = ImageIO.read(getClass().getResource("/resources/images/obs.png")).getScaledInstance(w1/2,w1/2,Image.SCALE_DEFAULT);
-                }*/
-                imagen = ImageIO.read(getClass().getResource(objeto.imagen)).getScaledInstance(w1/4,w1/4, Image.SCALE_DEFAULT);
+                if (objeto.type.equals("hueco")) {
+                    imagen = ImageIO.read(getClass().getResource("/resources/images/obs.png")).getScaledInstance(w1/4,w1/4,Image.SCALE_DEFAULT);
+                }else if (objeto.type.equals("palm")) {
+                    imagen = ImageIO.read(getClass().getResource("/resources/images/palmera.png")).getScaledInstance(w1/4,w1/2, Image.SCALE_DEFAULT);
+                }
             }catch(IOException e){
                 System.out.println(e);
             }
@@ -371,6 +382,7 @@ public class RoadAppMain extends JFrame {
          */
         public void addSecond() {
             System.out.println((tiempo+=1));
+            repaint();
         }
     }
 

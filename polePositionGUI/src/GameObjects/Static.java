@@ -44,6 +44,7 @@ public class Static extends Drawable{
         this.w = w;
         this.camX = camX;
         this.camZ = camZ;
+        this.type = type;
         if(type == "vida"){
             imagen = "/resources/images/vida.png";
         }else if(type == "hueco"){
