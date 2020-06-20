@@ -95,7 +95,7 @@ int main(int argc , char *argv[]){
     ***********************/
     while(continuar != 0) {
         partida = 1;
-        pista_tamano = (rand() %(35 -15 +1)) +15;
+        pista_tamano = (rand() %(90 -45 +1)) +45;
 
         /***********************
           Escucha a los clientes

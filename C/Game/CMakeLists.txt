@@ -3,6 +3,6 @@ project(Game C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Game Juego.c ListaEnlazada.h ListaEnlazada.c "Server-main.c" Server.c Server.h)
+add_executable(Game Juego.c "Server-main.c" Server.c Server.h ListaEnlazadaColisionables.c ListaEnlazadaColisionables.h)
 
 target_link_libraries(Game m)

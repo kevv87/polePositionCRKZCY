@@ -3,17 +3,16 @@
 //
 #ifndef GAME_JUEGO_H
 #define GAME_JUEGO_H
-#include "ListaEnlazada.h"
 
 /**********************
 Estructuras del juego
 **********************/
 /*
-*Estructura de las balas
+*Estructura de los disparos
 */
 typedef struct Disparo{
-    float pos_x;        //Posicion de la bala respecto a l centro de la pantalla en metros
-    float pos_y;        //Posicion de la bala respecto al punto de partida
+    double pos_x;        //Posicion de la bala respecto a l centro de la pantalla en metros
+    double pos_y;        //Posicion de la bala respecto al punto de partida
 } Disparo_t;
 
 /*
@@ -77,7 +76,6 @@ struct Jugador *jugador1_ptr, *jugador2_ptr, *lider;
 struct Disparo disparo_jugador1, disparo_jugador2;
 
 //Lista de disparos y colisionables
-NodePointer disparos, colisionables;
 
 //Tiempos del juego
 clock_t t_referencia, t_actual;
