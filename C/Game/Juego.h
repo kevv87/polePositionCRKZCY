@@ -4,6 +4,8 @@
 #ifndef GAME_JUEGO_H
 #define GAME_JUEGO_H
 
+#include "ListaEnlazadaColisionables.h"
+
 /**********************
 Estructuras del juego
 **********************/
@@ -37,29 +39,14 @@ typedef struct Jugador{
     Disparo_t disparo;  //Disparo asociado al jugador
 
     //Contadores del progreso del jugador
-    float aceleracion;  //Contador de aceleracion
-    float pos_X;        //Posicion del jugador respecto al centro de la pantalla en metros
-    float pos_Y;        //Posicion del jugador respecto al punto de partida en km
-    float rapidez;      //Contador de la rapidez
-    float t_acumulado;  //Contador de tiempo acumulado para calcular rapidez
+    float aceleracion;      //Contador de aceleracion
+    float pos_X_anterior;   //Posicion del jugador respecto al centro de la pantalla en metros
+    float pos_Y_anterior;   //Posicion del jugador respecto al punto de partida en km
+    float pos_X;            //Posicion del jugador respecto al centro de la pantalla en metros
+    float pos_Y;            //Posicion del jugador respecto al punto de partida en km
+    float rapidez;          //Contador de la rapidez
+    float t_acumulado;      //Contador de tiempo acumulado para calcular rapidez
 } Jugador_t;
-
-
-/*
- * Estructura de la pista
- */
-typedef struct Pista{
-    int tamano;         //Longitud en km de la pista
-} Pista_t;
-
-/*
- * Estructura de los colisionables
- */
-typedef struct Colisionable{
-    char tipo;          //Tipo de colisionable 'v' (vida) u 'o' (obstaculo)
-    int pos_X;          //Ubicacion del colisionable respecto al centro de la pantalla en metros
-    int pos_Y;          //Ubicacion del colisionable, en la pista, respecto al punto de partida en km
-} Colisionable_t;
 
 /****************************
 Elementos internos del juego
@@ -75,7 +62,10 @@ struct Jugador jugador1, jugador2;
 struct Jugador *jugador1_ptr, *jugador2_ptr, *lider;
 struct Disparo disparo_jugador1, disparo_jugador2;
 
-//Lista de disparos y colisionables
+//Listas de colisionables
+Node_colisionable_t *bonus;         //Tipo 1
+Node_colisionable_t *obstaculos;    //Tipo 2
+Node_colisionable_t *vidas;         //Tipo 3
 
 //Tiempos del juego
 clock_t t_referencia, t_actual;
@@ -137,7 +127,7 @@ void moverBalas_aux(Jugador_t *jugador, double tiempo);
  * Funcion que determina si una bala colisiono con algun jugador
  * args: -struct jugador (estructura del jugador)
  */
-int colision(Jugador_t *jugador);
+int colision(Jugador_t *jugador, Node_colisionable_t *head_lista);
 
 /* frenar()
  * Funcion que frena al jugador si no esta acelerando

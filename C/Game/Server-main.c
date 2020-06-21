@@ -96,6 +96,9 @@ int main(int argc , char *argv[]){
     while(continuar != 0) {
         partida = 1;
         pista_tamano = (rand() %(90 -45 +1)) +45;
+        bonus = nuevaListaColisionables(15, pista_tamano, 1);
+        obstaculos = nuevaListaColisionables(30, pista_tamano, 2);
+        vidas = nuevaListaColisionables(10, pista_tamano, 3);
 
         /***********************
           Escucha a los clientes
@@ -250,7 +253,6 @@ int main(int argc , char *argv[]){
                Ejecucion del juego
             ***********************/
             meta(jugador1_ptr, jugador2_ptr, pista_tamano);
-            //printf("El tamano de la pista es: %d\n", pista_tamano);
             if(jugador1_ptr->pos_Y != 0.0){
                 printf("%f\n", jugador1.pos_Y);
             }
@@ -260,8 +262,12 @@ int main(int argc , char *argv[]){
             moverBalas(jugador1_ptr, jugador2_ptr, t_transcurrido);
             avanzar(jugador1_ptr, t_transcurrido);
             avanzar(jugador2_ptr, t_transcurrido);
-            colision(jugador1_ptr);
-            colision(jugador2_ptr);
+            colision(jugador1_ptr, bonus);
+            colision(jugador1_ptr, obstaculos);
+            colision(jugador1_ptr, vidas);
+            colision(jugador2_ptr, bonus);
+            colision(jugador2_ptr, obstaculos);
+            colision(jugador2_ptr, vidas);
             delantera();
         }
     }

@@ -17,10 +17,8 @@ typedef struct Colisionable{
  */
 typedef struct Node_colisionable{
     Colisionable_t colisionable;
-    struct Node_colisioable_t *siguiente;
+    struct Node_colisionable *siguiente;
 } Node_colisionable_t;
-
-Node_colisionable_t *head;
 
 /*newColisionable()
  * Funcion que crea un nuevo nodo con una estrcutrura colisionable
