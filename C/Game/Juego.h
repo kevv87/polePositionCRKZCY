@@ -141,11 +141,6 @@ void frenar(Jugador_t *jugador);
  */
 void disparar(Jugador_t *jugador);
 
-/* juego()
- * Funcion que inicia un juego
- */
-void *juego();
-
 /* actualizarJugador()
  * Funcion que actualiza valores del jugador segun los comandos del cliente
  * args: -struct jugador (estructura del jugador)

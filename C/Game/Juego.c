@@ -74,7 +74,6 @@ void avanzar(Jugador_t *jugador, double tiempo){
 void avanzar_carretera(Jugador_t *jugador, double tiempo){
     jugador->pos_Y_anterior = jugador->pos_Y;
     jugador->pos_Y += tiempo*((jugador->rapidez)*(10.00/36.00));
-    printf("El jugador esta en la posicion %f\n", jugador->pos_Y);
     jugador->rapidez = 170*(-exp((jugador->t_acumulado)*k) + 1);
 }
 
@@ -111,7 +110,7 @@ void moverBalas_aux(Jugador_t *jugador, double tiempo){
 
 int colision(Jugador_t *jugador, Node_colisionable_t *head_lista){
     Node_colisionable_t *temp = head_lista;
-    while(temp->colisionable.posY <= jugador->pos_Y){
+    while(temp->siguiente != NULL){
         if((jugador->pos_Y_anterior <= temp->colisionable.posY) && (jugador->pos_Y >= temp->colisionable.posY)){
             if(fabs(jugador->pos_X - head_lista->colisionable.posX) <= 1){
                 if(temp->colisionable.tipo == 1){       //Si es un bonus
@@ -164,34 +163,6 @@ int meta(Jugador_t *jugador1, Jugador_t *jugador2, int pista_largo){
         printf("La carrera ha terminado!");
     }
 }
-/*
-void *juego(){
-    continuar = 1;
-    k = -0.2463;
-    setJugador(jugador1);
-    setJugador(jugador2);
-    srand(time(0));
-    while(continuar!=0){
-        partida = 1;
-        pista_tamano = (rand() %(35 -15 +1)) +15;
-        t_referencia = clock();
-        while(partida!=0){
-            sleep(1);
-            meta();
-            printf("El tamano de la pista es: %d\n", pista_tamano);
-            t_actual = clock();
-            printf("El tiempo actual es: %ld\n", t_actual);
-            t_transcurrido = t_actual - t_referencia;
-            avanzar(jugador1, t_transcurrido);
-            t_actual = clock();
-            t_transcurrido = t_actual - t_referencia;
-            avanzar(jugador2, t_transcurrido);
-            t_referencia = t_actual;
-            colision(jugador1);
-            colision(jugador2);
-        }
-    }
-}*/
 
 void inputJugador(Jugador_t *jugador, char input[64]){
     //Permite el uso de WASD o las flechas del teclado
@@ -199,23 +170,28 @@ void inputJugador(Jugador_t *jugador, char input[64]){
     //         R+Tecla --> Usuario suelta (release) dicha tecla
     if((strcmp(input, "IUP") == 0) || (strcmp(input, "IW") == 0)){
         jugador->movimiento_avance = 'w';
-        printf("estoy en el input W :D\n");
+        printf("estoy en el input IW\n");
     }
     else if((strcmp(input, "ILEFT") == 0) || (strcmp(input, "IA") == 0)){
         jugador->movimiento_lateral = 'a';
+        printf("estoy en el input IA\n");
     }
     else if((strcmp(input, "IRIGHT") == 0) || (strcmp(input, "ID") == 0)){
         jugador->movimiento_lateral = 'd';
+        printf("estoy en el input ID\n");
     }
     //F
     else if((strcmp(input, "RUP") == 0) || (strcmp(input, "RW") == 0)){
         jugador->movimiento_avance = '_';
+        printf("estoy en el input RW\n");
     }
     else if((strcmp(input, "RLEFT") == 0) || (strcmp(input, "RA") == 0)){
         jugador->movimiento_lateral = '_';
+        printf("estoy en el input DA\n");
     }
     else if((strcmp(input, "RRIGHT") == 0) || (strcmp(input, "RD") == 0)){
         jugador->movimiento_lateral = '_';
+        printf("estoy en el input RD\n");
     }
     //Disparo del jugador
     else if((strcmp(input, "ISPACE") == 0)){

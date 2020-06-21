@@ -12,7 +12,7 @@ Node_colisionable_t * newColisionable(int tamano_pista, int tipo){
     temp1 = malloc(sizeof(Colisionable_t));
     srand(time(0));
     int posX = (rand() %(5 +1 + 5)) - 5;        //PosX entre los limites de la calle
-    int posY = (rand() %(tamano_pista - 200 +1)) +200;      //PosY entre los primeros 200 metros y el final de la pista
+    int posY = (rand() %(tamano_pista*1000 - 200 +1)) +200;      //PosY entre los primeros 200 metros y el final de la pista
     colisionable.tipo = tipo;
     colisionable.posX = posX;
     colisionable.posY = posY;

@@ -13,9 +13,9 @@
 #include <unistd.h> //close
 
 #include "Juego.h"
+#include "WriteJSON.h"
 
 #define TRUE 1
-#define FALSE 0
 #define PORT 8888
 
 struct timeval timeout;
@@ -152,6 +152,7 @@ int main(int argc , char *argv[]){
                 //Vincula un socket a cada jugador
                 if(cont_clientes == 0){
                     jugador1_ptr->client = new_socket;
+                    printf("El jugador 1 tiene como cliente *********** %d\n", jugador1_ptr->client);
                 }
                 if(cont_clientes == 1){
                     jugador2_ptr->client = new_socket;
@@ -254,21 +255,26 @@ int main(int argc , char *argv[]){
             ***********************/
             meta(jugador1_ptr, jugador2_ptr, pista_tamano);
             if(jugador1_ptr->pos_Y != 0.0){
-                printf("%f\n", jugador1.pos_Y);
+                printf("El jugador 1 esta en la posicion: %f\n", jugador1.pos_Y);
+            }
+            if(jugador2_ptr->pos_Y != 0.0){
+                printf("El jugador 2 esta en la posicion: %f\n", jugador2.pos_Y);
             }
             t_transcurrido = (double)(clock() - t_referencia);
             sleep(1);
-            printf("%f\n", t_transcurrido);
             moverBalas(jugador1_ptr, jugador2_ptr, t_transcurrido);
             avanzar(jugador1_ptr, t_transcurrido);
             avanzar(jugador2_ptr, t_transcurrido);
-            colision(jugador1_ptr, bonus);
+            /*colision(jugador1_ptr, bonus);
             colision(jugador1_ptr, obstaculos);
             colision(jugador1_ptr, vidas);
             colision(jugador2_ptr, bonus);
             colision(jugador2_ptr, obstaculos);
-            colision(jugador2_ptr, vidas);
+            colision(jugador2_ptr, vidas);*/
             delantera();
+            //char* JSON = jsonWrite(jugador1_ptr->pos_X, jugador1_ptr->pos_Y, "1", jugador1_ptr->rapidez, jugador2_ptr->pos_X, jugador2_ptr->pos_Y, "2", jugador2_ptr->rapidez, 0, 0, "a");
+            //send(4, JSON, strlen(JSON), 0);
+            //send(5, JSON, strlen(JSON), 0);
         }
     }
     return 0;
