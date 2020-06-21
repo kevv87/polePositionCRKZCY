@@ -48,10 +48,14 @@ public class Start extends JFrame {
     // Constructor
     public Start(){
 
-        client = new Client(JOptionPane.showInputDialog("IP del servidor:"), Integer.parseInt(JOptionPane.showInputDialog("Puerto:")));
+        //client = new Client(JOptionPane.showInputDialog("IP del servidor:"), Integer.parseInt(JOptionPane.showInputDialog("Puerto:")));
 
         // Aqui se genera el mapa
         ArrayList<Static> objetos = new ArrayList<Static>();
+
+        objetos.add(new Static("vida", 8000, 500));
+        objetos.add(new Static("hueco", 3000, 200));
+        objetos.add(new Static("boost", 12000, 1100));
 
         myCar = new Car(0, true);
         DrawPanel drawPanel = new DrawPanel(objetos);
@@ -65,6 +69,8 @@ public class Start extends JFrame {
             if(i>200 && i<700){
                 line.curve=0.5;
                 //playerX-=200;
+            }else if(i>1200 && i<1500){
+                line.curve=-0.5;
             }
             lines.add(line);
         }
@@ -388,6 +394,10 @@ public class Start extends JFrame {
                     imagen = ImageIO.read(getClass().getResource("/resources/images/obs.png")).getScaledInstance(w1/4,w1/4,Image.SCALE_DEFAULT);
                 }else if (objeto.type.equals("palm")) {
                     imagen = ImageIO.read(getClass().getResource("/resources/images/palmera.png")).getScaledInstance(w1/4,w1/2, Image.SCALE_DEFAULT);
+                }else if(objeto.type.equals("vida")){
+                    imagen = ImageIO.read(getClass().getResource("/resources/images/vida.png")).getScaledInstance(w1/4,w1/4, Image.SCALE_DEFAULT);
+                }else if(objeto.type.equals("boost")){
+                    imagen = ImageIO.read(getClass().getResource("/resources/images/boost.png")).getScaledInstance(w1/4,w1/4, Image.SCALE_DEFAULT);
                 }
             }catch(IOException e){
                 System.out.println(e);

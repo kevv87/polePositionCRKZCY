@@ -16,18 +16,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30ad27ab-0587-4f3d-a6ba-39cf24dbf901" name="Default Changelist" comment="Inicio de velocidades">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/polePositionGUI_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_annotations_2_10_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_fasterxml_jackson_core_jackson_core_2_10_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_liferay_com_fasterxml_jackson_databind_2_10_0_LIFERAY_PATCHED_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsonObjects/initMsg.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsonObjects/mainPruebaJackson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsonObjects/midGameMsg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polePositionGUI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/polePositionGUI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameObjects/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameObjects/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pseudo3dRacing/RoadAppMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Start.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +79,7 @@
       <recent name="Screens" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.jacksonPrueba">
+  <component name="RunManager" selected="Application.Start">
     <configuration name="Client" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="logic.Client" />
       <module name="polePositionGUI" />
@@ -463,7 +452,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Start.java</url>
-          <line>269</line>
+          <line>275</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
