@@ -1,7 +1,7 @@
-package pseudo3dRacing;
-
 import GameObjects.Car;
 import GameObjects.Static;
+import logic.Client;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 /**
  * * Clase inicial, se encarga de ejecutar el juego.
  * *
@@ -18,7 +17,7 @@ import java.util.ArrayList;
  * * @version 1.0
  * * @since  06/19/2020
  * */
-public class RoadAppMain extends JFrame {
+public class Start extends JFrame {
 
     private static final int D_W=1500; // Ancho de pantalla
     private static final int D_H=1200; // Alto de pantala
@@ -35,8 +34,11 @@ public class RoadAppMain extends JFrame {
     boolean left;
     boolean right;
 
+    boolean chosen = false; // variable de carro elegido
 
     Car myCar;  // Mi carro
+
+    Client client; // Cliente de sockets
 
     int N; // Cantidad de lineas
     int roadW = 2000;  // Ancho de la calle.
@@ -44,16 +46,14 @@ public class RoadAppMain extends JFrame {
     double camD=0.84;  // Profundidad de la camara
 
     // Constructor
-    public RoadAppMain(){
+    public Start(){
+
+        client = new Client(JOptionPane.showInputDialog("IP del servidor:"), Integer.parseInt(JOptionPane.showInputDialog("Puerto:")));
 
         // Aqui se genera el mapa
         ArrayList<Static> objetos = new ArrayList<Static>();
 
-        // Add static objects
-        objetos.add(new Static("hueco", 35000, 1000));
-        objetos.add(new Static("palm",35000, roadW+500));
-
-        myCar = new Car(0);
+        myCar = new Car(0, true);
         DrawPanel drawPanel = new DrawPanel(objetos);
 
         // Agregando los segmentos
@@ -142,18 +142,25 @@ public class RoadAppMain extends JFrame {
                 //drawPanel.repaint();
             }
             if(event.getKeyCode() == KeyEvent.VK_LEFT){
+                if(!chosen){
+                    return;
+                }
                 right = true;
                 myCar.right();
                 //drawPanel.repaint();
             }
             if (event.getKeyCode() == KeyEvent.VK_RIGHT){
+                if(!chosen){
+                    return;
+                }
                 left = true;
                 myCar.left();
                 //drawPanel.repaint();
             }
-            /*if(draw)
-                drawPanel.repaint();
-            }*/
+            if(event.getKeyCode() == KeyEvent.VK_ENTER && !chosen){
+                chosen = true;
+                myCar = new Car(0, myCar.isP1());
+            }
         }
 
         // Eventos a iniciar cuando se sueltan teclas
@@ -168,11 +175,19 @@ public class RoadAppMain extends JFrame {
                 //drawPanel.repaint();
             }
             if(event.getKeyCode() == KeyEvent.VK_LEFT){
+                if(!chosen){
+                    myCar.setP1(!myCar.isP1());
+                    return;
+                }
                 right = false;
                 myCar.normal();
                 //drawPanel.repaint();
             }
             if (event.getKeyCode() == KeyEvent.VK_RIGHT){
+                if(!chosen){
+                    myCar.setP1(!myCar.isP1());
+                    return;
+                }
                 left = false;
                 myCar.normal();
                 //drawPanel.repaint();
@@ -187,10 +202,10 @@ public class RoadAppMain extends JFrame {
      * @version 1.0
      * @since  06/19/2020
      * */
-    private class DrawPanel extends JPanel{
+    private class DrawPanel extends JPanel {
 
         ArrayList<Static> objetos;  // Objetos estaticos a dibujar
-        double tiempo=0;
+        double tiempo = 0;
 
         // Constructor de la clase
         public DrawPanel(ArrayList<Static> objetos) {
@@ -199,111 +214,130 @@ public class RoadAppMain extends JFrame {
 
         /**
          * Metodo que se llama automaticamente para pintar los componentes del grafico
-         * @return Nada
+         *
          * @param g Graphics en el cual se va a dibujar
+         * @return Nada
          */
-        protected void paintComponent(Graphics g){
+        protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             //System.out.println("Pos: " + pos + " posx " + playerX);
             try {
-                drawValues(g);
+                if(!chosen){
+                    drawStart(g);
+                }else{
+                    drawValues(g);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
+        private void drawStart(Graphics g) throws IOException {
+            g.setFont(new Font("dialog",0, 25));
+           g.drawString("Choose your car",D_W/2 - 50, D_H/5);
+           Image imagen1 = ImageIO.read(getClass().getResource("/resources/images/car1.png")).getScaledInstance(200,200,1);
+           Image imagen2 = ImageIO.read(getClass().getResource("/resources/images/car2.png")).getScaledInstance(200,200, 1);
+
+
+           g.setColor(Color.RED);
+           if(myCar.isP1()){
+               g.drawRect(290, height/2 -10,220,220);
+           }else{
+               g.drawRect(width-600-10, height/2 -10,220,220);
+           }
+           g.drawImage(imagen1, 300, height/2, this);
+           g.drawImage(imagen2, width-600, height/2, this);
+        }
+
         /**
          * Metodo especializado para dibujar en el canvas
          *
-         * @return nada
          * @param g Graphics en el cual se va a dibujar
+         * @return nada
          * @throws IOException
          */
         private void drawValues(Graphics g) throws IOException {
             //drawQuad(g,Color.green, 500, 500, 200, 500,300,100);
             // ######################## draw road ############################## //
-            int startPos = (int) (pos/segL);
-            double x=0, dx= 0;
+            int startPos = (int) (pos / segL);
+            double x = 0, dx = 0;
 
             ArrayList<Static> pendingDraw = new ArrayList<>();
 
-            for(int n=startPos; n<startPos+300;n++){
-                Line l = lines.get(n%N);
+            for (int n = startPos; n < startPos + 300; n++) {
+                Line l = lines.get(n % N);
 
                 //System.out.println("Pos: " + pos + " posx: " +playerX );
                 //System.out.println(l.z);
 
-                //todo: Hacer verificacion de
+                //todo: Hacer verificacion de donde hay curvas
 
                 // Se mueve el carro a un lado segun la curva
-                if(playerX>roadW+100){
-                    playerX = roadW+100;
-                }else if(playerX<-roadW-100){
-                    playerX = -roadW-100;
+                if (playerX > roadW + 100) {
+                    playerX = roadW + 100;
+                } else if (playerX < -roadW - 100) {
+                    playerX = -roadW - 100;
                 }
 
-                l.project(playerX-(int)x, 1500, pos);
+                l.project(playerX - (int) x, 1500, pos);
 
-                x+=dx;
-                dx+=l.curve;
+                x += dx;
+                dx += l.curve;
 
                 // Colores de la carretera
-                Color grass = ((n/2)%2)==0? new Color(16,200,16):new Color(0,154,0);
-                Color rumble = ((n/2)%2)==0? new Color(255,255,255):new Color(255,0,0);
+                Color grass = ((n / 2) % 2) == 0 ? new Color(16, 200, 16) : new Color(0, 154, 0);
+                Color rumble = ((n / 2) % 2) == 0 ? new Color(255, 255, 255) : new Color(255, 0, 0);
                 Color road = Color.black;
 
-                Line p=null;
-                if(n==0){
-                    p=l;
-                }else{
-                    p=lines.get((n-1) % N);
+                Line p = null;
+                if (n == 0) {
+                    p = l;
+                } else {
+                    p = lines.get((n - 1) % N);
                 }
 
                 // Recorriendo la lista de objetos para pintarlos
-                for (Static objeto:objetos
+                for (Static objeto : objetos
                 ) {
-                    if(objeto.getPosM() == l.z && objeto.getPosM() - pos <33000){
-                        pendingDraw.add(new Static(g, objeto.type, (int)p.x,(int)p.Y,(int)p.W,playerX-(int)x, pos, objeto.getPosM(), objeto.getPosX()));
+                    if (objeto.getPosM() == l.z && objeto.getPosM() - pos < 33000) {
+                        pendingDraw.add(new Static(g, objeto.type, (int) p.x, (int) p.Y, (int) p.W, playerX - (int) x, pos, objeto.getPosM(), objeto.getPosX()));
                         //System.out.println(l.X);
                         //drawImg(g, "hueco", (int)l.x,(int)l.Y,(int)l.W, objeto,pos,playerX-(int)x);
                     }
                 }
 
                 //Dibujando el juego.
-                drawQuad(g,grass,0, (int) p.Y, width, 0, (int)l.Y, width);
-                drawQuad(g, rumble, (int)p.X, (int) p.Y, (int)(p.W*1.2),(int)l.X,(int)l.Y, (int)(l.W*1.2));
-                drawQuad(g, road, (int)p.X, (int)p.Y, (int)p.W, (int)l.X,(int)l.Y, (int)l.W);
+                drawQuad(g, grass, 0, (int) p.Y, width, 0, (int) l.Y, width);
+                drawQuad(g, rumble, (int) p.X, (int) p.Y, (int) (p.W * 1.2), (int) l.X, (int) l.Y, (int) (l.W * 1.2));
+                drawQuad(g, road, (int) p.X, (int) p.Y, (int) p.W, (int) l.X, (int) l.Y, (int) l.W);
 
             }
 
-
-
             //Dibujando cielo
-            Graphics skyG=g;
+            Graphics skyG = g;
             skyG.setColor(Color.blue);
-            skyG.fillRect(0,0,D_W, 395);
+            skyG.fillRect(0, 0, D_W, 395);
 
             // Draw my car
-            Image imagen = ImageIO.read(getClass().getResource(myCar.imagen)).getScaledInstance(275,200,Image.SCALE_DEFAULT);
-            g.drawImage(imagen, width/2 -imagen.getWidth(this)/2, height-imagen.getHeight(this)/2, this); // Draw car
+            Image imagen = ImageIO.read(getClass().getResource(myCar.imagen)).getScaledInstance(275, 200, Image.SCALE_DEFAULT);
+            g.drawImage(imagen, width / 2 - imagen.getWidth(this) / 2, height - imagen.getHeight(this) / 2, this); // Draw car
 
             // Recorriendo la lista de objetos pendientes a dibujar y dibujando
-            for (Static objeto:pendingDraw
+            for (Static objeto : pendingDraw
             ) {
                 //System.out.println(objeto.x);
-                drawImg(g,objeto.type,objeto.x,objeto.y, objeto.w, objeto, objeto.camZ, objeto.camX);
+                drawImg(g, objeto.type, objeto.x, objeto.y, objeto.w, objeto, objeto.camZ, objeto.camX);
             }
 
             // Panel de informacion
             g.setColor(Color.YELLOW);
             g.setFont(new Font("TimesRoman", Font.BOLD, 30));
-            g.drawString(Double.toString(tiempo), width/2-20, height/5);
+            g.drawString(Double.toString(tiempo), width / 2 - 20, height / 5);
 
-            g.drawRect(width/2-100,height/5 + 45, 200, 20);
+            g.drawRect(width / 2 - 100, height / 5 + 45, 200, 20);
             g.setColor(Color.RED);
-            g.fillRect(width/2-100,height/5+45, (int)(200*myCar.getVelocidad()/120), 20);
+            g.fillRect(width / 2 - 100, height / 5 + 45, (int) (200 * myCar.getVelocidad() / 120), 20);
         }
-
 
         /**
          * Metodo para dibujar un segmento del piso
@@ -316,7 +350,7 @@ public class RoadAppMain extends JFrame {
          * @param y1 La coordenada en y de la primera esquina
          * @param w1 ancho del segmento anterior
          * @param x2 La coordenada en x de la segunda esquina
-         * @param y2 La coodenarada en y de la segunda esquina
+         * @param y2 La coodenada en y de la segunda esquina
          * @param w2 ancho del segmento actual
          */
         void drawQuad(Graphics g, Color c, int x1, int y1, int w1, int x2, int y2, int w2){
@@ -326,6 +360,7 @@ public class RoadAppMain extends JFrame {
             int nPoints = 4;
             graphics.setColor(c);
             graphics.fillPolygon(xpoints, yPoints, nPoints);
+
         }
 
         /**
@@ -365,7 +400,6 @@ public class RoadAppMain extends JFrame {
         }
 
         // Metodo que establece el tamanno de la pantalla
-
         /**
          * Metodo que establece el tamanno de la pantalla
          *
@@ -381,8 +415,12 @@ public class RoadAppMain extends JFrame {
          * @return nada
          */
         public void addSecond() {
-            System.out.println((tiempo+=1));
-            repaint();
+            //System.out.println((tiempo+=1));
+            if(chosen){
+                tiempo++;
+                repaint();
+            }
+
         }
     }
 
@@ -403,8 +441,6 @@ public class RoadAppMain extends JFrame {
         public Line(){
             curve = x=y=z=0;
         }
-
-        // Projecting world to screen
 
         /**
          * Metodo para proyectar del mundo a la pantalla
@@ -429,7 +465,7 @@ public class RoadAppMain extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new RoadAppMain();
+                new Start();
             }
         });
 

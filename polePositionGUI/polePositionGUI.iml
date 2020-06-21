@@ -80,5 +80,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-core:2.10.2" level="project" />
+    <orderEntry type="library" name="com.liferay:com.fasterxml.jackson.databind:2.10.0.LIFERAY-PATCHED-1" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-annotations:2.10.2" level="project" />
   </component>
 </module>
